@@ -17,7 +17,7 @@ const AddBlog = () => {
       >
         {submited && <Congratulate setSubmited={setSubmited} type="blog" />}
         <p className="text-[24px] capitalize">Let’s get Writing Alora</p>
-        <form className="flexbm gap-[70px] h-full">
+        <form className="flexbs gap-[70px] h-full">
           <div className="cflexss gap-[37px] text-[18px]">
             <div>
               <p className="text-[24px] font-bold">Add New Blog </p>
@@ -48,7 +48,7 @@ const AddBlog = () => {
             </div>
           </div>
 
-          <div className="cflexms h-full gap-[174px]">
+          <div className="cflexms h-full mt-[140px] gap-[174px]">
             <div className="w-[456px]">
               <div className="w-full h-[320px] text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]">
                 <img

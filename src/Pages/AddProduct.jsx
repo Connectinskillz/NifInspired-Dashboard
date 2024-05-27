@@ -6,6 +6,24 @@ const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 const AddProduct = () => {
   const top = useRef(null);
   const [submited, setSubmited] = useState(false);
+  const [changing, setChanging] = useState(false);
+  const [peoductDetails, setProductDetails] = useState({
+    name: "",
+    price: "",
+    description: "",
+    image: "",
+    quantity: "",
+    category: "",
+    usage: "",
+    contents: "",
+    allergenes: "",
+    functions: "",
+  });
+  const handleChange = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    setProductDetails({ ...peoductDetails, [name]: value });
+  };
   useEffect(() => {
     scrollToRef(top);
   }, []);
@@ -17,7 +35,7 @@ const AddProduct = () => {
       >
         {submited && <Congratulate setSubmited={setSubmited} type="product" />}
         <p className="text-[24px] capitalize">Let’s get Creating Alora</p>
-        <form className="flexbm gap-[70px] h-full">
+        <form className="flexbs gap-[70px] h-full">
           <div className="cflexss gap-[37px] text-[18px]">
             <div>
               <p className="text-[24px] font-bold">Add New Product </p>
@@ -30,6 +48,10 @@ const AddProduct = () => {
               <input
                 className="w-full px-[20px] py-[10px] text-[14px] rounded-[9px] border-[2px] outline-none"
                 placeholder="Product Name"
+                type="text"
+                name="name"
+                value={peoductDetails.name}
+                onChange={handleChange}
               />
             </div>
             <div className="w-[511px]">
@@ -37,19 +59,43 @@ const AddProduct = () => {
               <textarea
                 className="w-full px-[20px] h-[112px] resize-none py-[10px] text-[14px] rounded-[9px] border-[2px] outline-none"
                 placeholder="Tell us something about your product"
+                type="text"
+                name="description"
+                value={peoductDetails.description}
+                onChange={handleChange}
               />
             </div>
             <div className="w-[511px]">
               <p>Choose a category</p>
-              <select className="w-full px-[10px] resize-none py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none cursor-pointer">
+              <select
+                className="w-full px-[10px] resize-none py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none cursor-pointer"
+                name="category"
+                value={peoductDetails.category}
+                onChange={handleChange}
+              >
                 <option value="1">select a category</option>
               </select>
+            </div>
+            <div className="w-[511px]">
+              <p>Usage</p>
+              <input
+                className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
+                placeholder="Describe the usage of the product"
+                type="text"
+                name="usage"
+                value={peoductDetails.usage}
+                onChange={handleChange}
+              />
             </div>
             <div className="w-[511px]">
               <p>Ingredients</p>
               <input
                 className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
                 placeholder="Add Ingredients"
+                type="text"
+                name="contents"
+                value={peoductDetails.contents}
+                onChange={handleChange}
               />
             </div>
             <div className="w-[511px]">
@@ -57,17 +103,48 @@ const AddProduct = () => {
               <input
                 className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
                 placeholder="Add Allergines"
+                type="text"
+                name="allergenes"
+                value={peoductDetails.allergenes}
+                onChange={handleChange}
               />
             </div>
             <div className="w-[511px]">
               <p>Function</p>
               <input
                 className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
-                placeholder="Add f unction"
+                placeholder="Add function"
+                type="text"
+                name="functions"
+                value={peoductDetails.functions}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="w-[511px]">
+              <p>Quantity</p>
+              <input
+                type="number"
+                className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
+                placeholder="Add Quantity"
+                name="quantity"
+                value={peoductDetails.quantity}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="w-[511px]">
+              <p>Price</p>
+              <input
+                className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
+                placeholder="Add Price"
+                type="number"
+                name="price"
+                value={peoductDetails.price}
+                onChange={handleChange}
               />
             </div>
           </div>
-          <div className="cflexms h-full gap-[174px]">
+          <div className="cflexms mt-[140px] h-full gap-[174px]">
             <div className="w-[456px]">
               <div className="w-full h-[320px] text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]">
                 <img
@@ -79,7 +156,7 @@ const AddProduct = () => {
               </div>
               <div className="w-full flexbm p-[6px]">
                 <p>Image name</p>
-                <Check size="24px"/>
+                <Check size="24px" />
               </div>
             </div>
             <button className="w-full rounded-full text-[24px] font-bold text-white  py-[22px] bg-accent flexmm">
