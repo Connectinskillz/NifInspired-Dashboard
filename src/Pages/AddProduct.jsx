@@ -116,11 +116,12 @@ const AddProduct = () => {
               <p>Choose a category</p>
               <select
                 className="w-full px-[10px] resize-none py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none cursor-pointer"
-                name="category"
-                value={productDetails.category}
+                name="category"                
                 onChange={handleChange}
               >
-                <option value="1">select a category</option>
+                <option value="default">select a category</option>
+                <option value="A category">A category</option>
+                <option value="Another category">Another category</option>
               </select>
             </div>
             <div className="w-[511px]">
