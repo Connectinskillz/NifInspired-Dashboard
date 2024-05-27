@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import { Check } from "heroicons-react";
 import Congratulate from "../Components/Congratulate";
 import Loader from "../Components/Loader/Loader";
+import FileBase64 from "react-file-base64";
+import { X } from "heroicons-react";
 import { createProduct } from "../Services/request";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
@@ -36,6 +38,20 @@ const AddProduct = () => {
       setLoading(true);
     }
   };
+
+  const OnChangeUploadFile = async (base64) => {
+    if (
+      base64.type === "image/png" ||
+      base64.type === "image/jpg" ||
+      base64.type === "image/jpeg" ||
+      base64.type === "image/jfif"
+    ) {
+      setProductDetails({ ...productDetails, image: base64 });
+      // Call API to upload image to database
+    }
+    console.log(base64);
+  };
+
   useEffect(() => {
     if (
       productDetails.name &&
@@ -177,18 +193,59 @@ const AddProduct = () => {
           </div>
           <div className="cflexms mt-[120px] h-full gap-[174px]">
             <div className="w-[456px]">
-              <div className="w-full h-[320px] text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]">
-                <img
-                  src="/img.svg"
-                  alt="image-placeholder"
-                  className="w-[78px] h-[78px] cursor-pointer"
-                />
-                <p>Add product image </p>
+              <div className="relative placeholder:w-full h-[320px] text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]">
+                {productDetails.image ? (
+                  <>
+                    <img
+                      src={productDetails.image.base64}
+                      alt="product"
+                      className="w-full h-full rounded-[10px] object-cover"
+                    />
+                    <div className="flexmm absolute top-[10px] right-[10px] z-10 cursor-pointer w-[40px] h-[40px] rounded-full bg-white">
+                      <X
+                        size="30px"
+                        color="black"
+                        onClick={() => {
+                          setProductDetails({ ...productDetails, image: "" });
+                        }}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <img
+                      src="/img.svg"
+                      alt="image-placeholder"
+                      className="w-[78px] h-[78px] cursor-pointer"
+                    />
+                    <p>Click to Add product image or Drag and Drop </p>
+                    <div className="absolute top-[10px] cflexmm gap-[3px] left-[10%] opacity-0 cursor-pointer">
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => {
+                        return (
+                          <>
+                            <FileBase64
+                              name="image"
+                              defaultValue=""
+                              multiple={false}
+                              onDone={(base64) => {
+                                OnChangeUploadFile(base64);
+                              }}
+                            />
+                          </>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
               </div>
-              <div className="w-full flexbm p-[6px]">
-                <p>Image name</p>
-                <Check size="24px" />
-              </div>
+              {productDetails.image && (
+                <>
+                  <div className="w-full flexbm p-[6px]">
+                    <p>{productDetails.image.name}</p>
+                    <Check size="24px" />
+                  </div>
+                </>
+              )}
             </div>
             <div className="w-full cflexmm gap-[10px]">
               <button
