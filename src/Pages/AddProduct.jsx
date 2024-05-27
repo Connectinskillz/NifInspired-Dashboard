@@ -1,18 +1,21 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Check } from "heroicons-react";
+import Congratulate from "../Components/Congratulate";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 const AddProduct = () => {
   const top = useRef(null);
+  const [submited, setSubmited] = useState(false);
   useEffect(() => {
     scrollToRef(top);
   }, []);
   return (
     <>
       <div
-        className="w-full cflexss gap-[52px] h-full overflow-y-auto"
+        className="relative w-full cflexss gap-[52px] h-full overflow-y-auto"
         ref={top}
       >
+        {submited && <Congratulate setSubmited={setSubmited} type="product" />}
         <p className="text-[24px] capitalize">Let’s get Creating Alora</p>
         <form className="flexbm gap-[70px] h-full">
           <div className="cflexss gap-[37px] text-[18px]">
@@ -76,7 +79,7 @@ const AddProduct = () => {
               </div>
               <div className="w-full flexbm p-[6px]">
                 <p>Image name</p>
-                <Check />
+                <Check size="24px"/>
               </div>
             </div>
             <button className="w-full rounded-full text-[24px] font-bold text-white  py-[22px] bg-accent flexmm">

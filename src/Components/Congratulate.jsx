@@ -1,0 +1,35 @@
+import React, { useEffect } from "react";
+
+const Congratulate = ({ setSubmited, type }) => {
+  useEffect(() => {
+    setTimeout(() => {
+      setSubmited(false);
+    }, 3000);
+  }, []);
+  return (
+    <>
+      <div
+        className="fixed top-0 right-0 z-50 h-[100vh] text-[24px] cflexmm gap-[37px] bg-white"
+        style={{ width: "calc(100% - 216px)" }}
+        onClick={() => {
+          setSubmited(false);
+        }}
+      >
+        <img
+          src="/congrats.svg"
+          alt="congratulate"
+          className="w-[128px] h-[128px]"
+        />
+        <p className="text-center capitalize">
+          Great job Alora{" "}
+          <span className="block">
+            {type === "product" ? "Product" : "Blog"} has successfully been
+            created
+          </span>
+        </p>
+      </div>
+    </>
+  );
+};
+
+export default Congratulate;
