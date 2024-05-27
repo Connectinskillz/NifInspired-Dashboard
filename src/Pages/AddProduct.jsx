@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Check } from "heroicons-react";
 import Congratulate from "../Components/Congratulate";
+import Loader from "../Components/Loader/Loader";
+import { createProduct } from "../Services/request";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 const AddProduct = () => {
@@ -8,6 +10,7 @@ const AddProduct = () => {
   const [submited, setSubmited] = useState(false);
   const [changing, setChanging] = useState(false);
   const [valid, setValid] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [productDetails, setProductDetails] = useState({
     name: "",
     price: "",
@@ -25,6 +28,13 @@ const AddProduct = () => {
     let value = e.target.value;
     setProductDetails({ ...productDetails, [name]: value });
     setChanging(!changing);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (valid) {
+      setLoading(true);
+    }
   };
   useEffect(() => {
     if (
@@ -56,7 +66,7 @@ const AddProduct = () => {
       >
         {submited && <Congratulate setSubmited={setSubmited} type="product" />}
         <p className="text-[24px] capitalize">Let’s get Creating Alora</p>
-        <form className="flexbs gap-[70px] h-full">
+        <form className="flexbs gap-[70px] h-full" onSubmit={handleSubmit}>
           <div className="cflexss gap-[37px] text-[18px]">
             <div>
               <p className="text-[24px] font-bold">Add New Product </p>
@@ -183,10 +193,20 @@ const AddProduct = () => {
             <div className="w-full cflexmm gap-[10px]">
               <button
                 className={`w-full rounded-full text-[24px] font-bold text-white  py-[22px] ${
-                  valid ? "bg-accent cursor-pointer" : "bg-accent/40 cursor-not-allowed"
+                  valid
+                    ? "bg-accent cursor-pointer"
+                    : "bg-accent/40 cursor-not-allowed"
                 } flexmm`}
+                type="submit"
               >
-                <p>Add Product</p>
+                {loading ? (
+                  <div className="flexmm gap-[10px] w-full">
+                    <Loader />
+                    <p>Add Product</p>
+                  </div>
+                ) : (
+                  <p>Add Product</p>
+                )}
               </button>
               {!valid && (
                 <p className="text-[14px] text-red-700">
