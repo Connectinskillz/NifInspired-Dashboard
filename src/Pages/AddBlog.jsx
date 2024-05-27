@@ -48,7 +48,7 @@ const AddBlog = () => {
             </div>
           </div>
 
-          <div className="cflexms h-full mt-[140px] gap-[174px]">
+          <div className="cflexms h-full mt-[120px] gap-[174px]">
             <div className="w-[456px]">
               <div className="w-full h-[320px] text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]">
                 <img

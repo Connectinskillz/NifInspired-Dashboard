@@ -7,7 +7,8 @@ const AddProduct = () => {
   const top = useRef(null);
   const [submited, setSubmited] = useState(false);
   const [changing, setChanging] = useState(false);
-  const [peoductDetails, setProductDetails] = useState({
+  const [valid, setValid] = useState(false);
+  const [productDetails, setProductDetails] = useState({
     name: "",
     price: "",
     description: "",
@@ -22,8 +23,28 @@ const AddProduct = () => {
   const handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    setProductDetails({ ...peoductDetails, [name]: value });
+    setProductDetails({ ...productDetails, [name]: value });
+    setChanging(!changing);
   };
+  useEffect(() => {
+    if (
+      productDetails.name &&
+      productDetails.price &&
+      productDetails.description &&
+      productDetails.image &&
+      productDetails.quantity &&
+      productDetails.category &&
+      productDetails.usage &&
+      productDetails.contents &&
+      productDetails.allergenes &&
+      productDetails.functions
+    ) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
+  }, [changing]);
+
   useEffect(() => {
     scrollToRef(top);
   }, []);
@@ -50,7 +71,7 @@ const AddProduct = () => {
                 placeholder="Product Name"
                 type="text"
                 name="name"
-                value={peoductDetails.name}
+                value={productDetails.name}
                 onChange={handleChange}
               />
             </div>
@@ -61,7 +82,7 @@ const AddProduct = () => {
                 placeholder="Tell us something about your product"
                 type="text"
                 name="description"
-                value={peoductDetails.description}
+                value={productDetails.description}
                 onChange={handleChange}
               />
             </div>
@@ -70,7 +91,7 @@ const AddProduct = () => {
               <select
                 className="w-full px-[10px] resize-none py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none cursor-pointer"
                 name="category"
-                value={peoductDetails.category}
+                value={productDetails.category}
                 onChange={handleChange}
               >
                 <option value="1">select a category</option>
@@ -83,7 +104,7 @@ const AddProduct = () => {
                 placeholder="Describe the usage of the product"
                 type="text"
                 name="usage"
-                value={peoductDetails.usage}
+                value={productDetails.usage}
                 onChange={handleChange}
               />
             </div>
@@ -94,7 +115,7 @@ const AddProduct = () => {
                 placeholder="Add Ingredients"
                 type="text"
                 name="contents"
-                value={peoductDetails.contents}
+                value={productDetails.contents}
                 onChange={handleChange}
               />
             </div>
@@ -105,7 +126,7 @@ const AddProduct = () => {
                 placeholder="Add Allergines"
                 type="text"
                 name="allergenes"
-                value={peoductDetails.allergenes}
+                value={productDetails.allergenes}
                 onChange={handleChange}
               />
             </div>
@@ -116,7 +137,7 @@ const AddProduct = () => {
                 placeholder="Add function"
                 type="text"
                 name="functions"
-                value={peoductDetails.functions}
+                value={productDetails.functions}
                 onChange={handleChange}
               />
             </div>
@@ -127,7 +148,7 @@ const AddProduct = () => {
                 className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
                 placeholder="Add Quantity"
                 name="quantity"
-                value={peoductDetails.quantity}
+                value={productDetails.quantity}
                 onChange={handleChange}
               />
             </div>
@@ -139,12 +160,12 @@ const AddProduct = () => {
                 placeholder="Add Price"
                 type="number"
                 name="price"
-                value={peoductDetails.price}
+                value={productDetails.price}
                 onChange={handleChange}
               />
             </div>
           </div>
-          <div className="cflexms mt-[140px] h-full gap-[174px]">
+          <div className="cflexms mt-[120px] h-full gap-[174px]">
             <div className="w-[456px]">
               <div className="w-full h-[320px] text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]">
                 <img
@@ -159,9 +180,20 @@ const AddProduct = () => {
                 <Check size="24px" />
               </div>
             </div>
-            <button className="w-full rounded-full text-[24px] font-bold text-white  py-[22px] bg-accent flexmm">
-              <p>Add Product</p>
-            </button>
+            <div className="w-full cflexmm gap-[10px]">
+              <button
+                className={`w-full rounded-full text-[24px] font-bold text-white  py-[22px] ${
+                  valid ? "bg-accent cursor-pointer" : "bg-accent/40 cursor-not-allowed"
+                } flexmm`}
+              >
+                <p>Add Product</p>
+              </button>
+              {!valid && (
+                <p className="text-[14px] text-red-700">
+                  *All fields are required!
+                </p>
+              )}
+            </div>
           </div>
         </form>
       </div>
