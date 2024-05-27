@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Check } from "heroicons-react";
 
+const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 const AddProduct = () => {
+  const top = useRef(null);
+  useEffect(() => {
+    scrollToRef(top);
+  }, []);
   return (
     <>
-      <div className="w-full cflexss gap-[52px] h-full overflow-y-auto">
+      <div
+        className="w-full cflexss gap-[52px] h-full overflow-y-auto"
+        ref={top}
+      >
         <p className="text-[24px] capitalize">Let’s get Creating Alora</p>
         <form className="flexbm gap-[70px] h-full">
           <div className="cflexss gap-[37px] text-[18px]">
