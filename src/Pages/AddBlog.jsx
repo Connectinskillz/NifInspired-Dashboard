@@ -4,6 +4,7 @@ import Congratulate from "../Components/Congratulate";
 import Loader from "../Components/Loader/Loader";
 import FileBase64 from "react-file-base64";
 import { X } from "heroicons-react";
+import { createBlog } from "../Services/request";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 const AddBlog = () => {
