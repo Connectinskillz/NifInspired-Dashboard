@@ -115,7 +115,7 @@ const Login = () => {
                   <Loader /> <p>Login</p>
                 </div>
               ) : (
-                "Login"
+                <p>Login</p>
               )
             }
             type="submit"
@@ -123,7 +123,7 @@ const Login = () => {
             class={`px-[70px] py-3 border ${
               confirm
                 ? "bg-accent cursor-pointer"
-                : "bg-gray-500 cursor-not-allowed"
+                : "bg-accent/40 cursor-not-allowed"
             } text-[#ffffff] rounded-full  my-10`}
           />
         </form>
