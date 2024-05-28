@@ -93,3 +93,22 @@ export const createProduct = async (token, body, setSubmited) => {
       }
     });
 };
+
+export const createBlog = async (token, body, setSubmited) => {
+  await axios
+    .post(`${api}/create-blog`, body, setImageConfig(token))
+    .then((response) => {
+      console.log(response);
+      if (response.data.status === "success") {
+        console.log("Blog Created!");
+        setSubmited(true);
+      }
+    })
+    .catch((err) => {
+      if (err.response.data.message) {
+        notifyError(err.response.data.message);
+      } else {
+        notifyError("Network Error");
+      }
+    });
+};
