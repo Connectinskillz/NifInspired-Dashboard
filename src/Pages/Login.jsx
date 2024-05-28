@@ -58,8 +58,7 @@ const Login = () => {
 
       <div className="flex flex-col items-center ">
         <div className="">
-          <p className="text-[42px] mobile:text-[24px] desktop:text-[56px] large:text-[42px]  font-poppins">
-            {" "}
+          <p className="text-[36px] mobile:text-[24px] desktop:text-[56px] large:text-[42px]  font-poppins">            
             Login
           </p>
         </div>
@@ -128,7 +127,7 @@ const Login = () => {
           />
         </form>
 
-        <div className="flex items-center mb-[20px] justify-between w-[80%] smtab:w-[50%] Tablet:w-[40%] desktop:w-[30%]  large:w-[20%] text-[12px]">
+        {/* <div className="flex items-center mb-[20px] justify-between w-[80%] smtab:w-[50%] Tablet:w-[40%] desktop:w-[30%]  large:w-[20%] text-[12px]">
           <p>
             New here?
             <Link to="/register" className="text-[blue]">
@@ -141,7 +140,7 @@ const Login = () => {
               Forgot your Password?
             </Link>
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
