@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const HomePage = () => {
+  const [user, setUser] = useState("");
+  const navigate = useNavigate();
+  useEffect(() => {
+    let token = localStorage.getItem("nifInspiredToken");
+    if (token) {
+      let user = localStorage.getItem("nifInspiredUser");
+      user = JSON.parse(user);
+      setUser(user);
+    } else {
+      navigate("/");
+    }
+  }, []);
   return (
     <>
       <div className="w-full cflexss py-[36px] px-[10%] gap-[18px]">
@@ -13,7 +26,7 @@ const HomePage = () => {
           />
         </div>
         <div className="w-full cflexmm gap-[7px]">
-          <p className="text-[24px]">Hello Alora</p>
+          <p className="text-[24px]">Hello {user?.name}</p>
           <p className="text-[18px] italic">
             What would we be starting on today ?{" "}
           </p>

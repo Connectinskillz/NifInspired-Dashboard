@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Check } from "heroicons-react";
 import Congratulate from "../Components/Congratulate";
+import { useNavigate } from "react-router-dom";
 import Loader from "../Components/Loader/Loader";
 import FileBase64 from "react-file-base64";
 import { X } from "heroicons-react";
@@ -9,7 +10,9 @@ import { createBlog } from "../Services/request";
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 const AddBlog = () => {
   const top = useRef(null);
+  const navigate = useNavigate();
   const [submited, setSubmited] = useState(false);
+  const [user, setUser] = useState("");
   const [changing, setChanging] = useState(false);
   const [valid, setValid] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -60,7 +63,15 @@ const AddBlog = () => {
   }, [changing]);
 
   useEffect(() => {
-    scrollToRef(top);
+    let token = localStorage.getItem("nifInspiredToken");
+    if (token) {
+      let user = localStorage.getItem("nifInspiredUser");
+      user = JSON.parse(user);
+      setUser(user);
+      scrollToRef(top);
+    } else {
+      navigate("/");
+    }
   }, []);
   return (
     <>
@@ -69,7 +80,7 @@ const AddBlog = () => {
         ref={top}
       >
         {submited && <Congratulate setSubmited={setSubmited} type="blog" />}
-        <p className="text-[24px] capitalize">Let’s get Writing Alora</p>
+        <p className="text-[24px] capitalize">Let’s get Writing {user?.name}</p>
         <form className="flexbs gap-[70px] h-full" onSubmit={handleSubmit}>
           <div className="cflexss gap-[37px] text-[18px]">
             <div>

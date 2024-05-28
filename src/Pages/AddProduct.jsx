@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Check } from "heroicons-react";
+import { useNavigate } from "react-router-dom";
 import Congratulate from "../Components/Congratulate";
 import Loader from "../Components/Loader/Loader";
 import FileBase64 from "react-file-base64";
@@ -8,11 +9,14 @@ import { createProduct } from "../Services/request";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 const AddProduct = () => {
+  const navigate = useNavigate();
   const top = useRef(null);
+  const [file, setFile] = useState("");
   const [submited, setSubmited] = useState(false);
   const [changing, setChanging] = useState(false);
   const [valid, setValid] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState("");
   const [productDetails, setProductDetails] = useState({
     name: "",
     price: "",
@@ -34,8 +38,26 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let token = localStorage.getItem("nifInspiredToken");
     if (valid) {
       setLoading(true);
+      let data = await createProduct(token, productDetails, setSubmited);
+      if (data) {
+        setProductDetails({
+          name: "",
+          price: "",
+          description: "",
+          image: "",
+          quantity: "",
+          category: "",
+          usage: "",
+          contents: "",
+          allergenes: "",
+          functions: "",
+        });
+        setFile("");
+        setLoading(false);
+      }
     }
   };
 
@@ -46,7 +68,9 @@ const AddProduct = () => {
       base64.type === "image/jpeg" ||
       base64.type === "image/jfif"
     ) {
-      setProductDetails({ ...productDetails, image: base64 });
+      setProductDetails({ ...productDetails, image: base64.file });
+      setFile(base64.base64);
+      setChanging(!changing);
       // Call API to upload image to database
     }
     console.log(base64);
@@ -72,7 +96,15 @@ const AddProduct = () => {
   }, [changing]);
 
   useEffect(() => {
-    scrollToRef(top);
+    let token = localStorage.getItem("nifInspiredToken");
+    if (token) {
+      let user = localStorage.getItem("nifInspiredUser");
+      user = JSON.parse(user);
+      setUser(user);
+      scrollToRef(top);
+    } else {
+      navigate("/");
+    }
   }, []);
   return (
     <>
@@ -81,7 +113,7 @@ const AddProduct = () => {
         ref={top}
       >
         {submited && <Congratulate setSubmited={setSubmited} type="product" />}
-        <p className="text-[24px] capitalize">Let’s get Creating Alora</p>
+        <p className="text-[24px] capitalize">Let’s get Creating {user.name}</p>
         <form className="flexbs gap-[70px] h-full" onSubmit={handleSubmit}>
           <div className="cflexss gap-[37px] text-[18px]">
             <div>
@@ -116,7 +148,7 @@ const AddProduct = () => {
               <p>Choose a category</p>
               <select
                 className="w-full px-[10px] resize-none py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none cursor-pointer"
-                name="category"                
+                name="category"
                 onChange={handleChange}
               >
                 <option value="default">select a category</option>
@@ -195,10 +227,10 @@ const AddProduct = () => {
           <div className="cflexms mt-[120px] h-full gap-[174px]">
             <div className="w-[456px]">
               <div className="relative placeholder:w-full h-[320px] text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]">
-                {productDetails.image ? (
+                {file ? (
                   <>
                     <img
-                      src={productDetails.image.base64}
+                      src={file}
                       alt="product"
                       className="w-full h-full rounded-[10px] object-cover"
                     />
@@ -207,7 +239,7 @@ const AddProduct = () => {
                         size="30px"
                         color="black"
                         onClick={() => {
-                          setProductDetails({ ...productDetails, image: "" });
+                          setFile("");
                         }}
                       />
                     </div>

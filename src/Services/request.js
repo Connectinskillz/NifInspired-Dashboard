@@ -41,7 +41,7 @@ export const setImageConfig = (accessToken) => {
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "multipart/form-data",
     },
-    withCredentials: true,
+    withCredentials: false,
   };
 
   return config;
@@ -76,39 +76,45 @@ export const userLogin = async (data) => {
 };
 
 export const createProduct = async (token, body, setSubmited) => {
+  let result = "";
   await axios
     .post(`${api}/create-product`, body, setImageConfig(token))
     .then((response) => {
       console.log(response);
-      if (response.data.status === "success") {
-        console.log("Product Created!");
+      if (response.data.status === true) {
+        result = response.data.product;
         setSubmited(true);
       }
     })
     .catch((err) => {
+      console.log(err);
       if (err.response.data.message) {
         notifyError(err.response.data.message);
       } else {
         notifyError("Network Error");
       }
     });
+  return result;
 };
 
 export const createBlog = async (token, body, setSubmited) => {
+  let result = "";
   await axios
     .post(`${api}/create-blog`, body, setImageConfig(token))
     .then((response) => {
       console.log(response);
-      if (response.data.status === "success") {
-        console.log("Blog Created!");
+      if (response.data.status === true) {
+        result = response.data;
         setSubmited(true);
       }
     })
     .catch((err) => {
+      console.log(err);
       if (err.response.data.message) {
         notifyError(err.response.data.message);
       } else {
         notifyError("Network Error");
       }
     });
+  return result;
 };
