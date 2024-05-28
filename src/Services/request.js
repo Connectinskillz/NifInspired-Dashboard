@@ -62,12 +62,7 @@ export const userLogin = async (data) => {
           JSON.stringify(response.data.user)
         );
         localStorage.setItem("nifInspiredToken", response.data.token);
-        let accessed = localStorage.getItem("accessedProduct");
-        if (accessed) {
-          window.location.pathname = "/cart";
-        } else {
-          window.location.pathname = "/";
-        }
+        window.location.pathname = "/overview";
       }
     })
     .catch((err) => {
@@ -87,7 +82,7 @@ export const createProduct = async (token, body, setSubmited) => {
       console.log(response);
       if (response.data.status === "success") {
         console.log("Product Created!");
-        setSubmited(true)
+        setSubmited(true);
       }
     })
     .catch((err) => {

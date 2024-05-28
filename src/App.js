@@ -6,6 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import RootLayout from "./Components/RootLayout";
+import Login from "./Pages/Login";
 import HomePage from "./Pages/HomePage";
 import AddProduct from "./Pages/AddProduct";
 import AddBlog from "./Pages/AddBlog";
@@ -15,7 +16,8 @@ import AddBlog from "./Pages/AddBlog";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<Login />} />
+      <Route path="/overview" element={<HomePage />} />
 
       <Route path="/" element={<RootLayout />}>
         <Route path="/add-product" element={<AddProduct />} />

@@ -7,7 +7,7 @@ const RootLayout = () => {
     <>
       <div className="w-full flexbs h-full">
         <div className="w-[216px] h-full fixed top-0 left-0 overflow-y-auto px-[30px] py-[33px] cflexsm gap-[74px] border-r-[2px]">
-          <Link to="/">
+          <Link to="/overview">
             <img
               src="/logo.svg"
               alt="dashboard-logo"
