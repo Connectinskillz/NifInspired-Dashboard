@@ -224,8 +224,8 @@ const AddProduct = () => {
               />
             </div>
           </div>
-          <div className="cflexms mt-[120px] h-full gap-[174px]">
-            <div className="w-[456px]">
+          <div className="cflexms mt-[120px] w-[456px] h-full gap-[174px] flex-shrink">
+            <div className="w-full">
               <div className="relative placeholder:w-full h-[320px] text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]">
                 {file ? (
                   <>

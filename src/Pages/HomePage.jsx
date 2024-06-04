@@ -32,30 +32,44 @@ const HomePage = () => {
           </p>
         </div>
         <div className="w-full flexbm mt-[20px]">
-          <div className="cflexmm gap-[14px]">
-            <p className="text-[18px] italic lowercase">
-              Add A NEW PRODUCT TO YOUR COLLECTION
+          <div className="cflexmm gap-[30px]">
+            <p className="text-[18px] italic">
+              Add a new product to your collection
             </p>
             <Link to="/add-product">
-              <div className="w-[517px] text-[24px] cflexmm rounded-[10px] gap-[38px] text-white pb-[30px] pt-[95px] bg-[#066B63] cursor-pointer">
+              <div className="w-[320px] text-[20px] cflexmm rounded-[10px] gap-[38px] text-white pb-[30px] pt-[95px] bg-[#066B63] cursor-pointer">
                 <img
                   src="/gala_add.svg"
                   alt="gala_add"
-                  className="w-[125px] h-[125px]"
+                  className="w-[65px] h-[65px]"
                 />
                 <p>Add Product</p>
               </div>
             </Link>
           </div>
 
-          <div className="cflexmm gap-[14px]">
-            <p className="text-[18px] italic lowercase">add a new blog/Story</p>
+          <div className="cflexmm gap-[30px]">
+            <p className="text-[18px] italic">Delete a product</p>
+            <Link to="/products">
+              <div className="w-[320px] text-[20px] cflexmm rounded-[10px] gap-[38px] text-white pb-[30px] pt-[95px] bg-[#066B63] cursor-pointer">
+                <img
+                  src="/deleteProduct.svg"
+                  alt="deleteProduct"
+                  className="w-[65px] h-[65px]"
+                />
+                <p>Delete Product</p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="cflexmm gap-[30px]">
+            <p className="text-[18px] italic">Add a new blog/Story</p>
             <Link to="/add-blog">
-              <div className="w-[517px] text-[24px] cflexmm rounded-[10px] gap-[38px] text-white pb-[30px] pt-[95px] bg-[#066B63] cursor-pointer">
+              <div className="w-[320px] text-[20px] cflexmm rounded-[10px] gap-[38px] text-white pb-[30px] pt-[95px] bg-[#066B63] cursor-pointer">
                 <img
                   src="/carbon_blog.svg"
                   alt="carbon_blog"
-                  className="w-[125px] h-[125px]"
+                  className="w-[65px] h-[65px]"
                 />
                 <p>Add Blog</p>
               </div>

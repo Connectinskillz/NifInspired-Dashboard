@@ -6,15 +6,15 @@ const RootLayout = () => {
   return (
     <>
       <div className="w-full flexbs h-full">
-        <div className="w-[216px] h-full fixed top-0 left-0 overflow-y-auto px-[30px] py-[33px] cflexsm gap-[74px] border-r-[2px]">
+        <div className="w-[216px] h-full fixed top-0 left-0 overflow-y-auto px-[30px] py-[33px] cflexsm gap-[60px] border-r-[2px]">
           <Link to="/overview">
             <img
               src="/logo.svg"
               alt="dashboard-logo"
-              className="w-[120px] h-[120px] cursor-pointer"
+              className="w-[100px] h-[100px] cursor-pointer"
             />
           </Link>
-          <div className="w-full cflexsm gap-[130px]">
+          <div className="w-full cflexsm gap-[55px]">
             <Link to="/add-product">
               <div className="w-[155px] text-[7.2px] cflexmm rounded-[3px] gap-[12px] text-white pb-[30px] py-[28px] bg-[#066B63] cursor-pointer">
                 <img
@@ -25,6 +25,18 @@ const RootLayout = () => {
                 <p>Add Product</p>
               </div>
             </Link>
+
+            <Link to="/products">
+              <div className="w-[155px] text-[7.2px] cflexmm rounded-[3px] gap-[12px] text-white pb-[30px] py-[28px] bg-[#066B63] cursor-pointer">
+                <img
+                  src="/deleteProduct.svg"
+                  alt="deleteProduct"
+                  className="w-[37px] h-[37px]"
+                />
+                <p>Delete Product</p>
+              </div>
+            </Link>
+
             <Link to="/add-blog">
               <div className="w-[155px] text-[7.2px] cflexmm rounded-[3px] gap-[12px] text-white pb-[30px] py-[28px] bg-[#066B63] cursor-pointer">
                 <img
