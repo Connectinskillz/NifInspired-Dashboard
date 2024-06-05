@@ -102,6 +102,8 @@ const ViewProducts = () => {
               <Product
                 categoryTitle={`${view.toLowerCase()} Products`}
                 item={products.length > 0 ? products : ""}
+                selected={selected}
+                setSelected={setSelected}
               />
             )}
           </div>

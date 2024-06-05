@@ -5,13 +5,14 @@ import Congratulate from "../Components/Congratulate";
 import Loader from "../Components/Loader/Loader";
 import FileBase64 from "react-file-base64";
 import { X } from "heroicons-react";
-import { createProduct } from "../Services/request";
+import { createProduct, fetchCategories } from "../Services/request";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 const AddProduct = () => {
   const navigate = useNavigate();
   const top = useRef(null);
   const [file, setFile] = useState("");
+  const [categories, setCategories] = useState([]);
   const [submited, setSubmited] = useState(false);
   const [changing, setChanging] = useState(false);
   const [valid, setValid] = useState(false);
@@ -32,8 +33,10 @@ const AddProduct = () => {
   const handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    setProductDetails({ ...productDetails, [name]: value });
-    setChanging(!changing);
+    if (value !== "select a category") {
+      setProductDetails({ ...productDetails, [name]: value });
+      setChanging(!changing);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -76,6 +79,14 @@ const AddProduct = () => {
     console.log(base64);
   };
 
+  const getCategories = async () => {
+    let categories = await fetchCategories();
+    console.log(categories);
+    if (categories) {
+      setCategories(categories);
+    }
+  };
+
   useEffect(() => {
     if (
       productDetails.name &&
@@ -102,6 +113,7 @@ const AddProduct = () => {
       user = JSON.parse(user);
       setUser(user);
       scrollToRef(top);
+      getCategories();
     } else {
       navigate("/");
     }
@@ -147,13 +159,20 @@ const AddProduct = () => {
             <div className="w-[511px]">
               <p>Choose a category</p>
               <select
-                className="w-full px-[10px] resize-none py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none cursor-pointer"
+                className="w-full px-[10px] resize-none py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none cursor-pointer capitalize"
                 name="category"
                 onChange={handleChange}
               >
                 <option value="default">select a category</option>
-                <option value="A category">A category</option>
-                <option value="Another category">Another category</option>
+                {categories?.map((category) => {
+                  return (
+                    <>
+                      <option value={category.name}>
+                        {category.name.toLowerCase()}
+                      </option>
+                    </>
+                  );
+                })}
               </select>
             </div>
             <div className="w-[511px]">

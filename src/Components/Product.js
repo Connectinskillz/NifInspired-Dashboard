@@ -1,5 +1,5 @@
 import React from "react";
-const Product = ({ categoryTitle, item }) => {
+const Product = ({ categoryTitle, item, selected, setSelected }) => {
   const prodData = item || [];
 
   return (
@@ -12,7 +12,19 @@ const Product = ({ categoryTitle, item }) => {
         {prodData.map((dataItems) => (
           <div
             key={dataItems?.uuid}
-            className="shadow-sm hover:shadow-xl p-3 w-boxed relative rounded-xl h-high mobile:h-mhigh m-1 mobile:p-2 smtab:w-mwide smtab:px-1 cursor-pointer mobile:w-full"
+            className={`shadow-sm hover:shadow-xl ${
+              selected.find((item) => item.uuid === dataItems.uuid) &&
+              "border-accent border-[2px]"
+            } p-3 w-boxed relative rounded-xl h-high mobile:h-mhigh m-1 mobile:p-2 smtab:w-mwide smtab:px-1 cursor-pointer mobile:w-full`}
+            onClick={() => {
+              if (selected.find((item) => item.uuid === dataItems.uuid)) {
+                setSelected(
+                  selected.filter((item) => item.uuid !== dataItems.uuid)
+                );
+              } else {
+                setSelected([...selected, dataItems]);
+              }
+            }}
           >
             <div className="rounded-xl h-boxed overflow-hidden mobile:h-mboxed">
               <img
