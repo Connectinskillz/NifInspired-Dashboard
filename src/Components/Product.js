@@ -1,12 +1,15 @@
 import React from "react";
+import { X } from "heroicons-react";
 const Product = ({ categoryTitle, item, selected, setSelected }) => {
   const prodData = item || [];
 
   return (
     <div className="flex flex-col mobile:flex-wrap">
-      <div className="flex items-center justify-between mb-6">
-        <p className="font-bold text-[24px] capitalize">{categoryTitle} </p>
-      </div>
+      {categoryTitle && (
+        <div className="flex items-center justify-between mb-6">
+          <p className="font-bold text-[24px] capitalize">{categoryTitle} </p>
+        </div>
+      )}
 
       <div className="flexsm gap-[25px] flex-wrap">
         {prodData.map((dataItems) => (
@@ -14,18 +17,33 @@ const Product = ({ categoryTitle, item, selected, setSelected }) => {
             key={dataItems?.uuid}
             className={`shadow-sm hover:shadow-xl ${
               selected.find((item) => item.uuid === dataItems.uuid) &&
+              categoryTitle &&
               "border-accent border-[2px]"
             } p-3 w-boxed relative rounded-xl h-high mobile:h-mhigh m-1 mobile:p-2 smtab:w-mwide smtab:px-1 cursor-pointer mobile:w-full`}
             onClick={() => {
               if (selected.find((item) => item.uuid === dataItems.uuid)) {
-                setSelected(
-                  selected.filter((item) => item.uuid !== dataItems.uuid)
-                );
+                if (categoryTitle) {
+                  setSelected(
+                    selected.filter((item) => item.uuid !== dataItems.uuid)
+                  );
+                }
               } else {
                 setSelected([...selected, dataItems]);
               }
             }}
           >
+            {!categoryTitle && (
+              <div
+                className="absolute top-2 right-2 w-[30px] h-[30px] rounded-full flexmm bg-white"
+                onClick={() => {
+                  setSelected(
+                    selected.filter((item) => item.uuid !== dataItems.uuid)
+                  );
+                }}
+              >
+                <X />
+              </div>
+            )}
             <div className="rounded-xl h-boxed overflow-hidden mobile:h-mboxed">
               <img
                 className="w-[100%] h-[100%] object-cover"

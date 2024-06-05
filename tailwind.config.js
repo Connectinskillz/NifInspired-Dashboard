@@ -57,7 +57,7 @@ module.exports = {
         boxed:"230px",
         mboxed:"170px",
         mhigh:"350px",
-        high:"430px"
+        high:"400px"
       }
     },
   },
