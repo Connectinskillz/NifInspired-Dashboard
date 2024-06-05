@@ -46,7 +46,7 @@ module.exports = {
       },
 
       width:{
-        boxed: "245px",
+        boxed: "230px",
         mwide:"200px",
 
         bwide:"300px",
@@ -54,7 +54,7 @@ module.exports = {
       },
 
       height:{
-        boxed:"220px",
+        boxed:"230px",
         mboxed:"170px",
         mhigh:"350px",
         high:"430px"

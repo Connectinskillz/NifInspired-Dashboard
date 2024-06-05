@@ -109,7 +109,7 @@ const AddProduct = () => {
   return (
     <>
       <div
-        className="relative w-full cflexss gap-[52px] h-full overflow-y-auto"
+        className="relative w-full px-[20px] cflexss gap-[52px] h-full overflow-y-auto"
         ref={top}
       >
         {submited && <Congratulate setSubmited={setSubmited} type="product" />}

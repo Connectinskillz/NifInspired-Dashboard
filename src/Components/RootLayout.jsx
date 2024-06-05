@@ -50,7 +50,7 @@ const RootLayout = () => {
           </div>
         </div>
         <div
-          className="ml-[216px] py-[90px] px-[20px] w-full h-full"
+          className="ml-[216px] py-[90px] w-full h-full"
           style={{ width: "calc(100% - 236px)" }}
         >
           <Outlet />

@@ -76,7 +76,7 @@ const AddBlog = () => {
   return (
     <>
       <div
-        className="w-full cflexss gap-[52px] h-full overflow-y-auto"
+        className="w-full cflexss px-[20px] gap-[52px] h-full overflow-y-auto"
         ref={top}
       >
         {submited && <Congratulate setSubmited={setSubmited} type="blog" />}

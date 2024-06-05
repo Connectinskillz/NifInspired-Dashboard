@@ -118,3 +118,76 @@ export const createBlog = async (token, body, setSubmited) => {
     });
   return result;
 };
+
+export const fetchAllProducts = async () => {
+  let result = [];
+  await axios
+    .get(`${api}/fetch-products`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: false,
+    })
+    .then((response) => {
+      if (response.data.status === true) {
+        result = response.data.product;
+      }
+    })
+    .catch((err) => {
+      if (err.response.data.message) {
+        notifyError(err.response.data.message);
+      } else {
+        notifyError("Network Error");
+      }
+    });
+  return result;
+};
+
+export const fetchCategoryProducts = async (category) => {
+  let result = [];
+  await axios
+    .get(`${api}/fetch-product/${category}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: false,
+    })
+    .then((response) => {
+      console.log(response);
+      if (response.data.status === true) {
+        result = response.data.product;
+      }
+    })
+    .catch((err) => {
+      if (err.response.data.message) {
+        notifyError(err.response.data.message);
+      } else {
+        notifyError("Network Error");
+      }
+    });
+  return result;
+};
+
+export const fetchCategories = async () => {
+  let result = [];
+  await axios
+    .get(`${api}/fetch-categories`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: false,
+    })
+    .then((response) => {
+      if (response.data.status === true) {
+        result = response.data.categories;
+      }
+    })
+    .catch((err) => {
+      if (err.response.data.message) {
+        notifyError(err.response.data.message);
+      } else {
+        notifyError("Network Error");
+      }
+    });
+  return result;
+};
