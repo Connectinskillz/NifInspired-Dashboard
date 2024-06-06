@@ -160,7 +160,7 @@ const ViewProducts = () => {
               selected.length > 0
                 ? "cursor-pointer bg-[#BB0000]"
                 : "cursor-not-allowed bg-[#BB0000]/40"
-            }`}
+            } hover:bg-[#BB0000]/90`}
             onClick={handleDeleteProducts}
           >
             {deleting ? (
