@@ -10,8 +10,7 @@ const Product = ({ categoryTitle, item, selected, setSelected }) => {
           <p className="font-bold text-[24px] capitalize">{categoryTitle} </p>
         </div>
       )}
-
-      <div className="flexsm gap-[25px] flex-wrap">
+      <div className="flexsm gap-[25px] flex-wrap">       
         {prodData.map((dataItems) => (
           <div
             key={dataItems?.uuid}

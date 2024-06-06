@@ -191,3 +191,22 @@ export const fetchCategories = async () => {
     });
   return result;
 };
+
+export const deleteProduct = async (token, productId) => {
+  let result = [];
+  await axios
+    .get(`${api}/delete-product/${productId}`, setConfig(token))
+    .then((response) => {
+      if (response.data.status === true) {
+        result = response.data.categories;
+      }
+    })
+    .catch((err) => {
+      if (err.response.data.message) {
+        notifyError(err.response.data.message);
+      } else {
+        notifyError("Network Error");
+      }
+    });
+  return result;
+};

@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
 import Product from "../Components/Product";
+import { useNavigate } from "react-router-dom";
 import { SpinnerCircular } from "spinners-react";
 import {
   fetchAllProducts,
   fetchCategories,
   fetchCategoryProducts,
+  deleteProduct,
 } from "../Services/request";
 
 const ViewProducts = () => {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState([]);
   const [view, setView] = useState("all");
   const [categories, setCategories] = useState("");
   const [products, setProducts] = useState([]);
   const [cLoading, setCLoading] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
 
   const getCategories = async () => {
     setCLoading(true);
@@ -46,6 +50,15 @@ const ViewProducts = () => {
     setLoading(false);
   };
 
+  const handleDeleteProducts = async () => {
+    setDeleting(true);
+    // let data = await deleteProduct(selected);
+    // if (data) {
+    //   console.log(data);
+    //   setSelected([]);
+    //   setDeleting(false);
+    // }
+  };
   useEffect(() => {
     if (view === "all") {
       getAllProducts();
@@ -55,7 +68,12 @@ const ViewProducts = () => {
   }, [view]);
 
   useEffect(() => {
-    getCategories();
+    let token = localStorage.getItem("nifInspiredToken");
+    if (token) {
+      getCategories();
+    } else {
+      navigate("/");
+    }
   }, []);
   return (
     <>
@@ -137,6 +155,17 @@ const ViewProducts = () => {
             selected={selected}
             setSelected={setSelected}
           />
+          <div
+            className={`fixed bottom-[10px] right-[10px] z-50 w-[320px] text-white rounded-full text-[24px] font-bold p-[15px] flexmm ${
+              selected.length > 0
+                ? "cursor-pointer bg-[#BB0000]"
+                : "cursor-not-allowed bg-[#BB0000]/40"
+            }`}
+            onClick={handleDeleteProducts}
+            
+          >
+            <p>Delete</p>
+          </div>
         </div>
       </div>
     </>
