@@ -148,7 +148,7 @@ const ViewProducts = () => {
           </div>
         </div>
 
-        <div className="fixed top-0 right-0 w-[340px] py-[80px] font-bold text-[30px] border-l-[2px] cflexss px-[25px] h-[100vh] gap-[25px] overflow-y-auto">
+        <div className="fixed top-0 right-0 w-[340px] pt-[80px] pb-[100px] font-bold text-[30px] border-l-[2px] cflexss px-[25px] h-[100vh] gap-[25px] overflow-y-auto">
           <p>Selected ({selected.length}) </p>
           <Product
             item={selected.length > 0 ? selected : ""}
@@ -162,9 +162,18 @@ const ViewProducts = () => {
                 : "cursor-not-allowed bg-[#BB0000]/40"
             }`}
             onClick={handleDeleteProducts}
-            
           >
-            <p>Delete</p>
+            {deleting ? (
+              <SpinnerCircular
+                color="#000000"
+                className="mr-4"
+                secondaryColor={"#ffffff"}
+                size={50}
+                thickness={150}
+              />
+            ) : (
+              <p>Delete</p>
+            )}
           </div>
         </div>
       </div>

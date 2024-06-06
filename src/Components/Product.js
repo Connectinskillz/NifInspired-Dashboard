@@ -52,7 +52,7 @@ const Product = ({ categoryTitle, item, selected, setSelected }) => {
             </div>
             {/**the product content */}
             <div className="flex flex-col ">
-              <div className="flex items-center justify-between my-3 font-medium text-[12px ]">
+              <div className="flex items-center justify-between my-3 font-medium text-[14px]">
                 <p>{dataItems?.category}</p>
                 <p>${dataItems?.price}</p>
               </div>
@@ -64,11 +64,7 @@ const Product = ({ categoryTitle, item, selected, setSelected }) => {
                 <p className="text-[14px] font-medium text-wrap mobile:text-[14px] line-clamp-1">
                   {dataItems?.description}
                 </p>
-              </div>
-
-              <div className="absolute bottom-5 mt-[100px] flex items-center left-0 right-0 justify-between px-3 mobile:flex-wrap">
-                <div className="underline text-[12px]">Learn more</div>
-              </div>
+              </div>             
             </div>
           </div>
         ))}
