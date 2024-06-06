@@ -9,37 +9,48 @@ import {
 
 const ViewProducts = () => {
   const [selected, setSelected] = useState([]);
-  const [view, setView] = useState("");
+  const [view, setView] = useState("all");
   const [categories, setCategories] = useState("");
   const [products, setProducts] = useState([]);
   const [cLoading, setCLoading] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getCategories = async () => {
     setCLoading(true);
     let categories = await fetchCategories();
     console.log(categories);
     if (categories) {
-      setView(categories[0].name);
+      // setView(categories[0].name);
       setCategories(categories);
       setCLoading(false);
-      getProducts(categories[0].name);
+      // getAllProducts();
     }
   };
 
-  const getProducts = async (view) => {
+  const getAllProducts = async () => {
+    setLoading(true);
+    let all = await fetchAllProducts();
+    if (all) {
+      console.log(all);
+      setProducts(all);
+      setLoading(false);
+    }
+  };
+
+  const getProducts = async () => {
     setLoading(true);
     let data = await fetchCategoryProducts(view);
     if (data) {
       setProducts(data);
-      console.log(data);
     }
     setLoading(false);
   };
 
   useEffect(() => {
-    if (view) {
-      getProducts(view);
+    if (view === "all") {
+      getAllProducts();
+    } else if (view !== "all") {
+      getProducts();
     }
   }, [view]);
 
@@ -66,6 +77,16 @@ const ViewProducts = () => {
               </div>
             ) : (
               <>
+                <div
+                  className={`px-[40px] py-[15px] font-bold text-[18px] hover:text-white hover:bg-accent ${
+                    view === "all"
+                      ? "bg-accent text-white"
+                      : "bg-white text-accent"
+                  } cursor-pointer rounded-full border-accent border-[2px] capitalize`}
+                  onClick={() => setView("all")}
+                >
+                  All
+                </div>
                 {categories &&
                   categories?.map((item, index) => {
                     return (
@@ -111,7 +132,7 @@ const ViewProducts = () => {
 
         <div className="fixed top-0 right-0 w-[340px] py-[80px] font-bold text-[30px] border-l-[2px] cflexss px-[25px] h-[100vh] gap-[25px] overflow-y-auto">
           <p>Selected ({selected.length}) </p>
-          <Product            
+          <Product
             item={selected.length > 0 ? selected : ""}
             selected={selected}
             setSelected={setSelected}

@@ -34,7 +34,7 @@ const Product = ({ categoryTitle, item, selected, setSelected }) => {
           >
             {!categoryTitle && (
               <div
-                className="absolute top-2 right-2 w-[30px] h-[30px] rounded-full flexmm bg-white"
+                className="absolute top-[10px] right-[10px] w-[30px] h-[30px] rounded-full flexmm bg-white"
                 onClick={() => {
                   setSelected(
                     selected.filter((item) => item.uuid !== dataItems.uuid)
