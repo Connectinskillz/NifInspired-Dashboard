@@ -192,14 +192,12 @@ export const fetchCategories = async () => {
   return result;
 };
 
-export const deleteProduct = async (token, productId) => {
+export const deleteProducts = async (token, body) => {
   let result = [];
   await axios
-    .get(`${api}/delete-product/${productId}`, setConfig(token))
+    .post(`${api}/delete-products`, body, setConfig(token))
     .then((response) => {
-      if (response.data.status === true) {
-        result = response.data.categories;
-      }
+      console.log(response)     
     })
     .catch((err) => {
       if (err.response.data.message) {

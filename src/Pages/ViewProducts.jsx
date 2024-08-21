@@ -6,7 +6,7 @@ import {
   fetchAllProducts,
   fetchCategories,
   fetchCategoryProducts,
-  deleteProduct,
+  deleteProducts,
 } from "../Services/request";
 
 const ViewProducts = () => {
@@ -24,10 +24,8 @@ const ViewProducts = () => {
     let categories = await fetchCategories();
     console.log(categories);
     if (categories) {
-      // setView(categories[0].name);
       setCategories(categories);
       setCLoading(false);
-      // getAllProducts();
     }
   };
 
@@ -50,14 +48,21 @@ const ViewProducts = () => {
     setLoading(false);
   };
 
+  const getProductIds = () => {
+    let ids = selected.map((item) => item.uuid);
+    console.log(ids)
+    return ids;
+  };
+
   const handleDeleteProducts = async () => {
     setDeleting(true);
-    // let data = await deleteProduct(selected);
-    // if (data) {
-    //   console.log(data);
-    //   setSelected([]);
-    //   setDeleting(false);
-    // }
+    let token = localStorage.getItem("nifInspiredToken");
+    let data = await deleteProducts(token, { ids: getProductIds() });
+    if (data) {
+      console.log(data);
+      setSelected([]);
+      setDeleting(false);
+    }
   };
   useEffect(() => {
     if (view === "all") {
@@ -82,7 +87,7 @@ const ViewProducts = () => {
           className="cflexss mr-[340px]"
           style={{ width: "calc(100% - 340px)" }}
         >
-          <div className="w-full flexbm pb-[35px] border-b-[2px]">
+          <div className="w-full flexbm pb-[35px] border-b-[2px] flex-wrap gap-[20px]">
             {cLoading ? (
               <div className="flexmm w-full">
                 <SpinnerCircular
