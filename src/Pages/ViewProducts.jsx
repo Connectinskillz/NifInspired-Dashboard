@@ -33,7 +33,6 @@ const ViewProducts = () => {
     setLoading(true);
     let all = await fetchAllProducts();
     if (all) {
-      console.log(all);
       setProducts(all);
       setLoading(false);
     }
@@ -49,8 +48,7 @@ const ViewProducts = () => {
   };
 
   const getProductIds = () => {
-    let ids = selected.map((item) => item.uuid);
-    console.log(ids)
+    let ids = selected.map((item) => item.id);
     return ids;
   };
 
@@ -62,6 +60,11 @@ const ViewProducts = () => {
       console.log(data);
       setSelected([]);
       setDeleting(false);
+      if (view == "all") {
+        getAllProducts();
+      } else {
+        getProducts(view);
+      }
     }
   };
   useEffect(() => {
