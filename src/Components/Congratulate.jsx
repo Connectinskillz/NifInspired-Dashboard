@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Congratulate = ({ setSubmited, type }) => {
+const Congratulate = ({ setSubmited, type, user }) => {
   useEffect(() => {
     setTimeout(() => {
       setSubmited(false);
@@ -21,7 +21,7 @@ const Congratulate = ({ setSubmited, type }) => {
           className="w-[128px] h-[128px]"
         />
         <p className="text-center capitalize">
-          Great job Alora{" "}
+          Great job {user}{" "}
           <span className="block">
             {type === "product" ? "Product" : "Blog"} has successfully been
             created

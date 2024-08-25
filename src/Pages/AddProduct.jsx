@@ -124,7 +124,7 @@ const AddProduct = () => {
         className="relative w-full px-[20px] cflexss gap-[52px] h-full overflow-y-auto"
         ref={top}
       >
-        {submited && <Congratulate setSubmited={setSubmited} type="product" />}
+        {submited && <Congratulate setSubmited={setSubmited} type="product" user={user?.name}/>}
         <p className="text-[24px] capitalize">Let’s get Creating {user.name}</p>
         <form className="flexbs gap-[70px] h-full" onSubmit={handleSubmit}>
           <div className="cflexss gap-[37px] text-[18px]">
@@ -258,7 +258,7 @@ const AddProduct = () => {
                         size="30px"
                         color="black"
                         onClick={() => {
-                          setFile("");
+                          
                         }}
                       />
                     </div>

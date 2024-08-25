@@ -6,12 +6,14 @@ import Loader from "../Components/Loader/Loader";
 import FileBase64 from "react-file-base64";
 import { X } from "heroicons-react";
 import { createBlog } from "../Services/request";
+import Editor from "./Editor";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 const AddBlog = () => {
   const top = useRef(null);
   const navigate = useNavigate();
   const [submited, setSubmited] = useState(false);
+  const [file, setFile] = useState("");
   const [user, setUser] = useState("");
   const [changing, setChanging] = useState(false);
   const [valid, setValid] = useState(false);
@@ -19,7 +21,7 @@ const AddBlog = () => {
   const [blogDetails, setBlogDetails] = useState({
     title: "",
     description: "",
-    category: "",
+    blog: "",
     image: "",
   });
   const handleChange = (e) => {
@@ -31,8 +33,20 @@ const AddBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let token = localStorage.getItem("nifInspiredToken");
     if (valid) {
       setLoading(true);
+      let data = await createBlog(token, blogDetails, setSubmited);
+      if (data) {
+        setBlogDetails({
+          title: "",
+          description: "",
+          blog: "",
+          image: "",
+        });
+        setFile("");
+        setLoading(false);
+      }
     }
   };
 
@@ -43,7 +57,9 @@ const AddBlog = () => {
       base64.type === "image/jpeg" ||
       base64.type === "image/jfif"
     ) {
-      setBlogDetails({ ...blogDetails, image: base64 });
+      setBlogDetails({ ...blogDetails, image: base64.file });
+      setFile(base64.base64);
+      setChanging(!changing);
       // Call API to upload image to database
     }
     console.log(base64);
@@ -53,8 +69,8 @@ const AddBlog = () => {
     if (
       blogDetails.title &&
       blogDetails.description &&
-      blogDetails.image &&
-      blogDetails.category
+      blogDetails.blog &&
+      blogDetails.image
     ) {
       setValid(true);
     } else {
@@ -79,7 +95,7 @@ const AddBlog = () => {
         className="w-full cflexss px-[20px] gap-[52px] h-full overflow-y-auto"
         ref={top}
       >
-        {submited && <Congratulate setSubmited={setSubmited} type="blog" />}
+        {submited && <Congratulate setSubmited={setSubmited} type="blog" user={user?.name}/>}
         <p className="text-[24px] capitalize">Let’s get Writing {user?.name}</p>
         <form className="flexbs gap-[70px] h-full" onSubmit={handleSubmit}>
           <div className="cflexss gap-[37px] text-[18px]">
@@ -93,6 +109,10 @@ const AddBlog = () => {
               <p>Blog title</p>
               <input
                 className="w-full px-[20px] py-[10px] text-[14px] rounded-[9px] border-[2px] outline-none"
+                type="text"
+                name="title"
+                onChange={handleChange}
+                value={blogDetails.title}
                 placeholder="Blog Title"
               />
             </div>
@@ -100,25 +120,29 @@ const AddBlog = () => {
               <p>Brief description</p>
               <textarea
                 className="w-full px-[20px] h-[112px] resize-none py-[10px] text-[14px] rounded-[9px] border-[2px] outline-none"
+                type="text"
+                name="description"
+                onChange={handleChange}
+                value={blogDetails.description}
                 placeholder="Tell us something about your blog"
               />
             </div>
-            <div className="w-[511px]">
+            <div className="w-[511px] cflexss gap-[10px]">
               <p>Blog Body</p>
-              {/* <input
-                className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
-                placeholder="Add Ingredients"
-              /> */}
+              <Editor
+                blogDetails={blogDetails}
+                setBlogDetails={setBlogDetails}
+              />
             </div>
           </div>
 
           <div className="cflexms h-full mt-[120px] gap-[174px]">
             <div className="w-[456px]">
               <div className="relative placeholder:w-full h-[320px] text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]">
-                {blogDetails.image ? (
+                {file ? (
                   <>
                     <img
-                      src={blogDetails.image.base64}
+                      src={file}
                       alt="product"
                       className="w-full h-full rounded-[10px] object-cover"
                     />
@@ -127,7 +151,7 @@ const AddBlog = () => {
                         size="30px"
                         color="black"
                         onClick={() => {
-                          setBlogDetails({ ...blogDetails, image: "" });
+                          setFile("");
                         }}
                       />
                     </div>
