@@ -24,7 +24,7 @@ const Congratulate = ({ setSubmited, type, user }) => {
           Great job {user}{" "}
           <span className="block">
             {type === "product" ? "Product" : "Blog"} has successfully been
-            created
+            created.
           </span>
         </p>
       </div>
