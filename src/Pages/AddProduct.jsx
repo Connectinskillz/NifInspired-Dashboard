@@ -18,13 +18,14 @@ const AddProduct = () => {
   const [valid, setValid] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState("");
+  const [selection, setselection] = useState([]);
   const [productDetails, setProductDetails] = useState({
     name: "",
     price: "",
     description: "",
     image: "",
     quantity: "",
-    category: "",
+    category: [],
     usage: "",
     contents: "",
     allergenes: "",
@@ -38,6 +39,15 @@ const AddProduct = () => {
       setChanging(!changing);
     }
   };
+  //category section
+  const handleSelection = (e) => {
+    let value = e.target.value;
+    setselection((prev) => [...prev, value]);
+  };
+
+  useEffect(() => {
+    setProductDetails({ ...productDetails, category: selection });
+  }, [selection]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -124,7 +134,13 @@ const AddProduct = () => {
         className="relative w-full px-[20px] cflexss gap-[52px] h-full overflow-y-auto"
         ref={top}
       >
-        {submited && <Congratulate setSubmited={setSubmited} type="product" user={user?.name}/>}
+        {submited && (
+          <Congratulate
+            setSubmited={setSubmited}
+            type="product"
+            user={user?.name}
+          />
+        )}
         <p className="text-[24px] capitalize">Let’s get Creating {user.name}</p>
         <form className="flexbs gap-[70px] h-full" onSubmit={handleSubmit}>
           <div className="cflexss gap-[37px] text-[18px]">
@@ -161,7 +177,7 @@ const AddProduct = () => {
               <select
                 className="w-full px-[10px] resize-none py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none cursor-pointer capitalize"
                 name="category"
-                onChange={handleChange}
+                onChange={handleSelection}
               >
                 <option value="default">select a category</option>
                 {categories?.map((category) => {
@@ -174,6 +190,13 @@ const AddProduct = () => {
                   );
                 })}
               </select>
+              <div className="flex items-center gap-2 w-full  my-1 rounded-lg p-1 text-[12px]">
+                {selection.map((item, index) => (
+                  <p key={index} className=" border px-3 py-1 rounded-lg">
+                    {item}
+                  </p>
+                ))}
+              </div>
             </div>
             <div className="w-[511px]">
               <p>Usage</p>
@@ -254,13 +277,7 @@ const AddProduct = () => {
                       className="w-full h-full rounded-[10px] object-cover"
                     />
                     <div className="flexmm absolute top-[10px] right-[10px] z-10 cursor-pointer w-[40px] h-[40px] rounded-full bg-white">
-                      <X
-                        size="30px"
-                        color="black"
-                        onClick={() => {
-                          
-                        }}
-                      />
+                      <X size="30px" color="black" onClick={() => {}} />
                     </div>
                   </>
                 ) : (
