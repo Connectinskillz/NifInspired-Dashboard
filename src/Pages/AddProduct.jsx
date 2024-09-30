@@ -91,7 +91,7 @@ const AddProduct = () => {
 
   const getCategories = async () => {
     let categories = await fetchCategories();
-    console.log(categories);
+    // console.log(categories);
     if (categories) {
       setCategories(categories);
     }
