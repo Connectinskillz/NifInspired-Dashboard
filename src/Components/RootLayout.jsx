@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import { ArrowRight } from "heroicons-react";
 
 const RootLayout = () => {
   return (
     <>
       <div className="w-full flexbs h-full">
-        <div className="w-[216px] h-full fixed top-0 left-0 overflow-y-auto px-[30px] py-[33px] cflexsm gap-[60px] border-r-[2px]">
+        <div className="w-[216px] h-full fixed top-0 left-0 overflow-y-auto px-[30px] py-[33px] cflexsm gap-[40px] border-r-[2px]">
           <Link to="/overview">
             <img
               src="/logo.svg"
@@ -14,7 +15,7 @@ const RootLayout = () => {
               className="w-[100px] h-[100px] cursor-pointer"
             />
           </Link>
-          <div className="w-full cflexsm gap-[55px]">
+          <div className="w-full cflexsm gap-[24px]">
             <Link to="/add-product">
               <div className="w-[155px] text-[7.2px] cflexmm rounded-[3px] gap-[12px] text-white pb-[30px] py-[28px] bg-[#066B63] cursor-pointer">
                 <img
@@ -46,6 +47,14 @@ const RootLayout = () => {
                 />
                 <p>Add Blog</p>
               </div>
+            </Link>
+
+            <Link
+              to="/orders"
+              className="w-full flexmm gap-[5px] text-[16px] underline italic"
+            >
+              <p>View Orders</p>
+              <ArrowRight size={20} />
             </Link>
           </div>
         </div>
