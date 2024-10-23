@@ -127,7 +127,7 @@ const TableOfOrders = ({
         <thead scope="column" className="w-full font-normal">
           <tr className="w-full overflow-x-scroll px-[10px] text-[14px] text-[#066B63] font-bold bg-[#066b631a] rounded-[6px]">
             <td className="px-[24px] py-[16px]">
-              <p>Date of Order</p>
+              <p>Date of order</p>
             </td>
             <td className="px-[24px] py-[16px]">
               <p>Order Id</p>
