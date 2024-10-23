@@ -7,16 +7,16 @@ import {
   SearchOutline,
   FilterOutline,
   ChevronUpOutline,
-  ChevronDownOutline
+  ChevronDownOutline,
 } from "heroicons-react";
-import { Paginated, GetPaginatedData } from "../Components/Pagination";
+import { Paginated, GetPaginatedData } from "./Pagination";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "../../node_modules/react-loading-skeleton/dist/skeleton.css";
-// import MoveArticle from "../../components/MoveArticle";
+// import Moveorder from "../../components/Moveorder";
 import Button from "./Button";
-// import { reorderArticle } from "../../services/request";
+// import { reorderorder } from "../../services/request";
 
-const CoursesTable = ({ courses, setCourses, title }) => {
+const CoursesTable = ({ orders, setOrders }) => {
   const navigate = useNavigate();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -25,8 +25,8 @@ const CoursesTable = ({ courses, setCourses, title }) => {
     <>
       {isOpenModal && modalContent}
       <div className="cflexss w-full gap-[30px] px-[2%] mobile:px-0 font-inter">
-        <div className="w-full text-3xl mobile:text-[23px] font-semibold text-[#232323] flexss">
-          <p>{title}</p>
+        <div className="w-full text-[32px] font-bold text-[#000000] flexss">
+          <p>Orders</p>
         </div>
         <div className="w-full cflexss gap-[20px]">
           <div className="w-full flexbm flex-wrap gap-[20px]">
@@ -42,21 +42,21 @@ const CoursesTable = ({ courses, setCourses, title }) => {
                 <SearchOutline size={25} />
               </form>
               <div className="flexmm p-[10px] cursor-pointer hover:bg-blue-500/20 rounded-[5px]">
-              <FilterOutline size={20} />
+                <FilterOutline size={20} />
               </div>
             </div>
             <Button
               title="Add Course"
               btnStyle="bg-blue-600/90 hover:bg-blue-600 px-[22px] py-[10px] rounded-[7px] text-[14px] text-white"
               click={() => {
-                navigate("/trainer-courses/edit")
+                navigate("/trainer-courses/edit");
               }}
             />
           </div>
-          <TableOfCourses
-            courses={courses}
-            setCourses={setCourses}
-            // setArticle={setArticle}
+          <TableOfOrders
+            orders={orders}
+            setOrders={setOrders}
+            // setorder={setorder}
             // setContent={setContent}
             searchQuery={searchQuery}
             setIsOpenModal={setIsOpenModal}
@@ -70,17 +70,16 @@ const CoursesTable = ({ courses, setCourses, title }) => {
 
 export default CoursesTable;
 
-const TableOfCourses = ({
-  courses,
-  setCourses,
-  // setArticle,
+const TableOfOrders = ({
+  orders,
+  setOrders,
+  // setorder,
   // setContent,
   searchQuery,
 }) => {
-
   const [currentPage, setCurrentPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
-  const PAGINATION = 5;
+  const PAGINATION = 10;
   const handlePageClick = (data) => {
     const selectedPage = data.selected;
     setCurrentPage(selectedPage);
@@ -95,68 +94,66 @@ const TableOfCourses = ({
     e.preventDefault();
   };
 
-  const articleReorder = async (newItems) => {
-    let alpsToken = localStorage.getItem("alpsToken");
+  const orderReorder = async (newItems) => {
     let customized = [];
     for (let i = 0; i < newItems.length; i++) {
       customized.push({
         id: newItems[i].id,
         order: i + 1,
       });
-    }    
+    }
   };
 
   const onDrop = (e, newIndex) => {
     const draggedIndex = e.dataTransfer.getData("index");
-    const newItems = [...courses];
+    const newItems = [...orders];
     const [removed] = newItems.splice(draggedIndex, 1);
     newItems.splice(newIndex, 0, removed);
-    setCourses(newItems);
-    articleReorder(newItems);
+    setOrders(newItems);
+    orderReorder(newItems);
   };
   useEffect(() => {
-    if (courses.length > 0) {
-      setPageCount(Paginated(courses, PAGINATION));
+    if (orders.length > 0) {
+      setPageCount(Paginated(orders, PAGINATION));
     }
-  }, [courses]);
+  }, [orders]);
 
-  const filteredcourses = courses?.filter((article) =>
-    article.title.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredorders = orders?.filter((order) =>
+    order.order.toLowerCase().includes(searchQuery.toLowerCase())
   );
   return (
     <>
-      <table className="w-full overflow-x-scroll p-0 m-0">
-        <thead scope="column" className="w-full text-[14px]">
-          <tr className="w-full overflow-x-scroll px-[10px] border-b-[1px] border-black font-semibold bg-[#F5F5F5] rounded-[6px]">
-            <td className="px-[24px] py-[16px] flexsm font-[600] gap-[16px]">
-              <input
-                type="checkbox"
-                className="rounded-[4px] w-[24px] h-[24px] font-[600]"
-              />
-              <div className="flexmm gap-[10px]">
-                <p>Course</p>
-                <ChevronUpOutline size={16} />
-              </div>
+      <table className="w-full overflow-x-scroll font-normal text-[12px] p-0 m-0">
+        <thead scope="column" className="w-full font-normal">
+          <tr className="w-full overflow-x-scroll px-[10px] text-[14px] text-[#066B63] font-bold bg-[#066b631a] rounded-[6px]">
+            <td className="px-[24px] py-[16px]">
+              <p>Date of Order</p>
             </td>
             <td className="px-[24px] py-[16px]">
-              <p>Code</p>
+              <p>Order Id</p>
             </td>
             <td className="px-[24px] py-[16px]">
-              <p>Category</p>
+              <p>Time of order</p>
             </td>
             <td className="px-[24px] py-[16px]">
-              <p>Price</p>
+              <p>Customer</p>
             </td>
             <td className="px-[24px] py-[16px]">
-              <p>Last updated on</p>
+              <p>Order</p>
+            </td>
+            <td className="px-[24px] py-[16px]">
+              <p>Status</p>
+            </td>
+            <td className="px-[24px] py-[16px]">
+              <p>Delivery Status</p>
             </td>
           </tr>
         </thead>
-        {courses.length > 0 && (
+        {orders.length > 0 && (
           <>
             <tbody className="w-full">
-              {GetPaginatedData(currentPage, PAGINATION, filteredcourses).map(
-                (article, index) => {
+              {GetPaginatedData(currentPage, PAGINATION, filteredorders).map(
+                (order, index) => {
                   return (
                     <>
                       <tr
@@ -167,40 +164,59 @@ const TableOfCourses = ({
                         onDrop={(e) => onDrop(e, index)}
                         className="cursor-pointer border-b-[1px] bg-white hover:bg-[#F5F5F5]"
                         onClick={() => {
-                          // setArticle(article);
-                          // setContent("create article");
+                          // setorder(order);
+                          // setContent("create order");
                         }}
                       >
-                        <td className="px-[24px] flexsm gap-[16px] py-[16px]">
-                          <img
-                            src="/move1.svg"
-                            alt="move-icon"
-                            draggable={false}
-                          />
-                          <p>{article.title}</p>
+                        <td className="px-[24px] py-[16px]">
+                          <p>{order.dateCreated}</p>
                         </td>
                         <td className="px-[24px] py-[16px]">
-                          <div className="flexsm gap-[8px] capitalize">
-                            <div
-                              className={`w-[8px] h-[8px] rounded-full ${
-                                article.status === "published" && "bg-[#22C55E]"
+                          <p>{order.orderId}</p>
+                        </td>
+                        <td className="px-[24px] py-[16px]">
+                          <p>{order.timeOfOrder}</p>
+                        </td>
+                        <td className="px-[24px] py-[16px]">
+                          <p>{order.customer}</p>
+                        </td>
+                        <td className="px-[24px] py-[16px]">
+                          <p>{order.order}</p>
+                        </td>
+                        <td className="px-[24px] py-[16px]">
+                          <div
+                            className={`flexmm px-[10px] py-[5px] rounded-full ${
+                              order.status === "completed" && "bg-[#EFFFEB]"
+                            } ${order.status === "pending" && "bg-[#FFFDE7]"}`}
+                          >
+                            <p
+                              className={`${
+                                order.status === "completed" && "text-[#22A900]"
                               } ${
-                                article.status === "draft" && "bg-yellow-400"
-                              } ${
-                                article.status === "archived" && "bg-red-600"
+                                order.status === "pending" && "text-[#FEE718]"
                               }`}
-                            />
-                            <p className="capitalize">{article.status}</p>
+                            >
+                              {order.status}
+                            </p>
                           </div>
                         </td>
-                        <td className="px-[24px] font-[700] py-[16px]">
-                          <p>{article.views}</p>
-                        </td>
-                        <td className="px-[24px] font-[700] py-[16px]">
-                          <p>{article.upVoteCount}</p>
-                        </td>
-                        <td className="px-[24px] font-[700] py-[16px] flexbm gap-[16px]">
-                          <p>{article.downVoteCount}</p>
+                        <td className="px-[24px] py-[16px]">
+                          <div
+                            className={`flexmm px-[10px] py-[5px] rounded-full ${
+                              order.deliveryStatus === "Delivered" &&
+                              "bg-[#EFFFEB]"
+                            } ${order.deliveryStatus === "Pending" && "bg-[#FFFDE7]"}`}
+                          >
+                            <p
+                              className={`${
+                                order.deliveryStatus === "Delivered" && "text-[#22A900]"
+                              } ${
+                                order.deliveryStatus === "Pending" && "text-[#FEE718]"
+                              }`}
+                            >
+                              {order.deliveryStatus}
+                            </p>
+                          </div>
                         </td>
                       </tr>
                     </>
@@ -211,7 +227,7 @@ const TableOfCourses = ({
           </>
         )}
       </table>
-      {courses.length === 0 && (
+      {orders.length === 0 && (
         <div className="w-full">
           <SkeletonTheme baseColor="#f5f5f5" highlightColor="#cacecf">
             {new Array(6).fill().map((x, index) => (
