@@ -1,99 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CoursesTable from "../Components/CoursesTable";
+import { fetchAllOrders } from "../Services/request";
 
 const ViewOrders = () => {
-  const [orders, setOrders] = useState([
-    {
-      dateCreated: "13/11/2022",
-      orderId: "#2349355",
-      timeOfOrder: "09:30am",
-      customer: "Toyosi Ibiyemi",
-      order: "Nike Shoe",
-      status: "completed",
-      deliveryStatus: "Delivered",
-    },
-    {
-      dateCreated: "13/11/2022",
-      orderId: "#2349355",
-      timeOfOrder: "09:30am",
-      customer: "Toyosi Ibiyemi",
-      order: "Nike Shoe",
-      status: "completed",
-      deliveryStatus: "Delivered",
-    },
-    {
-      dateCreated: "13/11/2022",
-      orderId: "#2349355",
-      timeOfOrder: "09:30am",
-      customer: "Toyosi Ibiyemi",
-      order: "Gucci Bag",
-      status: "pending",
-      deliveryStatus: "Delivered",
-    },
-    {
-      dateCreated: "13/11/2022",
-      orderId: "#2349355",
-      timeOfOrder: "09:30am",
-      customer: "Toyosi Ibiyemi",
-      order: "Nike Shoe",
-      status: "completed",
-      deliveryStatus: "Delivered",
-    },
-    {
-      dateCreated: "13/11/2022",
-      orderId: "#2349355",
-      timeOfOrder: "09:30am",
-      customer: "Toyosi Ibiyemi",
-      order: "Nike Shoe",
-      status: "completed",
-      deliveryStatus: "Pending",
-    },
-    {
-      dateCreated: "13/11/2022",
-      orderId: "#2349355",
-      timeOfOrder: "09:30am",
-      customer: "Toyosi Ibiyemi",
-      order: "Nike Shoe",
-      status: "completed",
-      deliveryStatus: "Delivered",
-    },
-    {
-      dateCreated: "13/11/2022",
-      orderId: "#2349355",
-      timeOfOrder: "09:30am",
-      customer: "Toyosi Ibiyemi",
-      order: "Nike Shoe",
-      status: "completed",
-      deliveryStatus: "Delivered",
-    },
-    {
-      dateCreated: "13/11/2022",
-      orderId: "#2349355",
-      timeOfOrder: "09:30am",
-      customer: "Toyosi Ibiyemi",
-      order: "Nike Shoe",
-      status: "pending",
-      deliveryStatus: "Delivered",
-    },
-    {
-      dateCreated: "13/11/2022",
-      orderId: "#2349355",
-      timeOfOrder: "09:30am",
-      customer: "Toyosi Ibiyemi",
-      order: "Nike Shoe",
-      status: "completed",
-      deliveryStatus: "Delivered",
-    },
-    {
-      dateCreated: "13/11/2022",
-      orderId: "#2349355",
-      timeOfOrder: "09:30am",
-      customer: "Toyosi Ibiyemi",
-      order: "Nike Shoe",
-      status: "completed",
-      deliveryStatus: "Delivered",
-    },
-  ]);
+  const [orders, setOrders] = useState([]);
+
+  const getOrders = async () => {
+    const data = await fetchAllOrders();
+    setOrders(data);
+    console.log(data);
+  };
+  useEffect(() => {
+    getOrders();
+  }, []);
 
   return (
     <>

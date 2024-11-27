@@ -197,7 +197,31 @@ export const deleteProducts = async (token, body) => {
   await axios
     .post(`${api}/delete-products`, body, setConfig(token))
     .then((response) => {
-      console.log(response)     
+      console.log(response);
+    })
+    .catch((err) => {
+      if (err.response.data.message) {
+        notifyError(err.response.data.message);
+      } else {
+        notifyError("Network Error");
+      }
+    });
+  return result;
+};
+
+export const fetchAllOrders = async () => {
+  let result = [];
+  await axios
+    .get(`${api}/fetch-all-orders`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: false,
+    })
+    .then((response) => {      
+      if (response.data.status === true) {
+        result = response.data.data;
+      }
     })
     .catch((err) => {
       if (err.response.data.message) {

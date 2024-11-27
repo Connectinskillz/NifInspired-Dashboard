@@ -86,32 +86,23 @@ const TableOfOrders = ({
     // Fetch and display data for the selected page
   };
 
-  const onDragStart = (e, index) => {
-    e.dataTransfer.setData("index", index);
+  const formatDate = (rawDate) => {
+    const date = new Date(rawDate);
+
+    // Convert to readable format
+    const readableDate = date.toLocaleString("en-US", {
+      timeZone: "UTC",
+      dateStyle: "long",
+      timeStyle: "short",
+    });
+    const [formattedDate, formattedTime] = readableDate.split("at ");
+
+    return {
+      date: formattedDate, // e.g., "October 2, 2024"
+      time: formattedTime, // e.g., "3:36 PM"
+    };
   };
 
-  const onDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  const orderReorder = async (newItems) => {
-    let customized = [];
-    for (let i = 0; i < newItems.length; i++) {
-      customized.push({
-        id: newItems[i].id,
-        order: i + 1,
-      });
-    }
-  };
-
-  const onDrop = (e, newIndex) => {
-    const draggedIndex = e.dataTransfer.getData("index");
-    const newItems = [...orders];
-    const [removed] = newItems.splice(draggedIndex, 1);
-    newItems.splice(newIndex, 0, removed);
-    setOrders(newItems);
-    orderReorder(newItems);
-  };
   useEffect(() => {
     if (orders.length > 0) {
       setPageCount(Paginated(orders, PAGINATION));
@@ -119,7 +110,7 @@ const TableOfOrders = ({
   }, [orders]);
 
   const filteredorders = orders?.filter((order) =>
-    order.order.toLowerCase().includes(searchQuery.toLowerCase())
+    order.order_details.toLowerCase().includes(searchQuery.toLowerCase())
   );
   return (
     <>
@@ -136,20 +127,20 @@ const TableOfOrders = ({
               <p>Time of order</p>
             </td>
             <td className="px-[24px] py-[16px]">
-              <p>Customer</p>
+              <p>Customer Email</p>
             </td>
             <td className="px-[24px] py-[16px]">
               <p>Order</p>
             </td>
             <td className="px-[24px] py-[16px]">
-              <p>Status</p>
+              <p>Total Price</p>
             </td>
             <td className="px-[24px] py-[16px]">
-              <p>Delivery Status</p>
+              <p>Status</p>
             </td>
           </tr>
         </thead>
-        {orders.length > 0 && (
+        {orders?.length > 0 && (
           <>
             <tbody className="w-full">
               {GetPaginatedData(currentPage, PAGINATION, filteredorders).map(
@@ -158,10 +149,6 @@ const TableOfOrders = ({
                     <>
                       <tr
                         key={index}
-                        draggable
-                        onDragStart={(e) => onDragStart(e, index)}
-                        onDragOver={onDragOver}
-                        onDrop={(e) => onDrop(e, index)}
                         className="cursor-pointer border-b-[1px] bg-white hover:bg-[#F5F5F5]"
                         onClick={() => {
                           // setorder(order);
@@ -169,19 +156,22 @@ const TableOfOrders = ({
                         }}
                       >
                         <td className="px-[24px] py-[16px]">
-                          <p>{order.dateCreated}</p>
+                          <p>{formatDate(order.updated_at).date}</p>
                         </td>
                         <td className="px-[24px] py-[16px]">
-                          <p>{order.orderId}</p>
+                          <p>{order.order_id}</p>
                         </td>
                         <td className="px-[24px] py-[16px]">
-                          <p>{order.timeOfOrder}</p>
+                          <p>{formatDate(order.updated_at).time}</p>
                         </td>
                         <td className="px-[24px] py-[16px]">
-                          <p>{order.customer}</p>
+                          <p>{order.customer_email}</p>
                         </td>
                         <td className="px-[24px] py-[16px]">
-                          <p>{order.order}</p>
+                          <p>{order.order_details}</p>
+                        </td>
+                        <td className="px-[24px] py-[16px]">
+                          <p>N{order.total_price}</p>
                         </td>
                         <td className="px-[24px] py-[16px]">
                           <div
@@ -197,24 +187,6 @@ const TableOfOrders = ({
                               }`}
                             >
                               {order.status}
-                            </p>
-                          </div>
-                        </td>
-                        <td className="px-[24px] py-[16px]">
-                          <div
-                            className={`flexmm px-[10px] py-[5px] rounded-full ${
-                              order.deliveryStatus === "Delivered" &&
-                              "bg-[#EFFFEB]"
-                            } ${order.deliveryStatus === "Pending" && "bg-[#FFFDE7]"}`}
-                          >
-                            <p
-                              className={`${
-                                order.deliveryStatus === "Delivered" && "text-[#22A900]"
-                              } ${
-                                order.deliveryStatus === "Pending" && "text-[#FEE718]"
-                              }`}
-                            >
-                              {order.deliveryStatus}
                             </p>
                           </div>
                         </td>
