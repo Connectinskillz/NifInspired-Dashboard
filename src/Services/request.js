@@ -97,6 +97,28 @@ export const createProduct = async (token, body, setSubmited) => {
   return result;
 };
 
+export const editProduct = async (token, body, setSubmited) => {
+  let result = "";
+  await axios
+    .post(`${api}/edit-product`, body, setImageConfig(token))
+    .then((response) => {
+      console.log(response);
+      if (response.data.status === true) {
+        result = response.data.product;
+        setSubmited(true);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      if (err.response.data.message) {
+        notifyError(err.response.data.message);
+      } else {
+        notifyError("Network Error");
+      }
+    });
+  return result;
+};
+
 export const createBlog = async (token, body, setSubmited) => {
   let result = "";
   await axios
@@ -119,10 +141,56 @@ export const createBlog = async (token, body, setSubmited) => {
   return result;
 };
 
+export const editBlog = async (token, body, setSubmited) => {
+  let result = "";
+  await axios
+    .post(`${api}/edit-blog`, body, setImageConfig(token))
+    .then((response) => {
+      console.log(response);
+      if (response.data.status === true) {
+        result = response.data;
+        setSubmited(true);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      if (err.response.data.message) {
+        notifyError(err.response.data.message);
+      } else {
+        notifyError("Network Error");
+      }
+    });
+  return result;
+};
+
 export const fetchAllProducts = async () => {
   let result = [];
   await axios
     .get(`${api}/fetch-products`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: false,
+    })
+    .then((response) => {
+      if (response.data.status === true) {
+        result = response.data.product;
+      }
+    })
+    .catch((err) => {
+      if (err.response.data.message) {
+        notifyError(err.response.data.message);
+      } else {
+        notifyError("Network Error");
+      }
+    });
+  return result;
+};
+
+export const fetchSingleProduct = async (productId) => {
+  let result = [];
+  await axios
+    .get(`${api}/fetch-single-product/${productId}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -218,7 +286,7 @@ export const fetchAllOrders = async () => {
       },
       withCredentials: false,
     })
-    .then((response) => {      
+    .then((response) => {
       if (response.data.status === true) {
         result = response.data.data;
       }
@@ -231,4 +299,46 @@ export const fetchAllOrders = async () => {
       }
     });
   return result;
+};
+
+export const fetchBlogs = async () => {
+  try {
+    const response = await axios.get(`${api}/fetch-blogs`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: false,
+    });
+
+    const result = response.data.blogs;
+    // This will log after the promise resolves
+    return result;
+  } catch (err) {
+    if (err.response?.data?.message) {
+      notifyError(err.response.data.message);
+    } else {
+      notifyError("Network Error");
+    }
+    return []; // Return an empty array in case of an error
+  }
+};
+export const fetchSingleBlog = async (id) => {
+  try {
+    const response = await axios.get(`${api}/fetch-single-blog/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: false,
+    });
+
+    const result = response.data.blog;
+    return result;
+  } catch (err) {
+    if (err.response?.data?.message) {
+      notifyError(err.response.data.message);
+    } else {
+      notifyError("Network Error");
+    }
+    return []; // Return an empty array in case of an error
+  }
 };

@@ -12,6 +12,9 @@ import AddProduct from "./Pages/AddProduct";
 import AddBlog from "./Pages/AddBlog";
 import ViewProducts from "./Pages/ViewProducts";
 import ViewOrders from "./Pages/ViewOrders";
+import EditProduct from "./Pages/EditProduct";
+import ViewBlogs from "./Pages/ViewBlogs";
+import EditBlog from "./Pages/EditBlog";
 
 //for the router we are using the React-Router-Dom version 6.4
 //check treello infospace for the link to the documentation and Link to a Tutorial video
@@ -25,6 +28,9 @@ const router = createBrowserRouter(
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/add-blog" element={<AddBlog />} />
         <Route path="/products" element={<ViewProducts />} />
+        <Route path="/products/:productId" element={<EditProduct />} />
+        <Route path="/blogs" element={<ViewBlogs />} />
+        <Route path="/blogs/:blogId" element={<EditBlog />} />
         <Route path="/orders" element={<ViewOrders />} />
       </Route>
     </Route>

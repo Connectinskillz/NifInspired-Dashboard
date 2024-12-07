@@ -23,8 +23,12 @@ const Congratulate = ({ setSubmited, type, user }) => {
         <p className="text-center capitalize">
           Great job {user}{" "}
           <span className="block">
-            {type === "product" ? "Product" : "Blog"} has successfully been
-            created.
+            {type === "product" && <p>Product has successfully been created</p>}
+            {type === "edit-product" && (
+              <p>Product has successfully been edited</p>
+            )}
+            {type === "blog" && <p>Blog has successfully been created</p>}
+            {type === "edit-blog" && <p>Blog has successfully been edited</p>}
           </span>
         </p>
       </div>

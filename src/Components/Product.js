@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { X } from "heroicons-react";
+import { BiEditAlt } from "react-icons/bi";
 const Product = ({ categoryTitle, item, selected, setSelected }) => {
   const prodData = item || [];
 
@@ -10,11 +12,11 @@ const Product = ({ categoryTitle, item, selected, setSelected }) => {
           <p className="font-bold text-[24px] capitalize">{categoryTitle} </p>
         </div>
       )}
-      <div className="flexsm gap-[25px] flex-wrap">       
+      <div className="flexsm gap-[25px] flex-wrap">
         {prodData.map((dataItems) => (
           <div
             key={dataItems?.uuid}
-            className={`shadow-sm hover:shadow-xl ${
+            className={`group relative shadow-sm hover:shadow-xl ${
               selected.find((item) => item.uuid === dataItems.uuid) &&
               categoryTitle &&
               "border-accent border-[2px]"
@@ -31,6 +33,12 @@ const Product = ({ categoryTitle, item, selected, setSelected }) => {
               }
             }}
           >
+            <Link
+              to={`/products/${dataItems.id}`}
+              className="hidden group-hover:block absolute top-0 left-0 px-[20px] py-[15px] bg-white rounded-full"
+            >
+              <BiEditAlt size="25px" />
+            </Link>
             {!categoryTitle && (
               <div
                 className="absolute top-[10px] right-[10px] w-[30px] h-[30px] rounded-full flexmm bg-white"
@@ -64,7 +72,7 @@ const Product = ({ categoryTitle, item, selected, setSelected }) => {
                 <p className="text-[14px] font-medium text-wrap mobile:text-[14px] line-clamp-1">
                   {dataItems?.description}
                 </p>
-              </div>             
+              </div>
             </div>
           </div>
         ))}

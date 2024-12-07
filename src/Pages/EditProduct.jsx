@@ -1,14 +1,20 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Check } from "heroicons-react";
 import { useNavigate } from "react-router-dom";
 import Congratulate from "../Components/Congratulate";
 import Loader from "../Components/Loader/Loader";
 import FileBase64 from "react-file-base64";
-import { X } from "heroicons-react";
-import { createProduct, fetchCategories } from "../Services/request";
+import { X, ChevronLeftOutline } from "heroicons-react";
+import {
+  fetchSingleProduct,
+  fetchCategories,
+  editProduct,
+} from "../Services/request";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
-const AddProduct = () => {
+const EditProduct = () => {
+  const { productId } = useParams();
   const navigate = useNavigate();
   const top = useRef(null);
   const [file, setFile] = useState("");
@@ -18,8 +24,10 @@ const AddProduct = () => {
   const [valid, setValid] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState("");
-  const [selection, setselection] = useState([]);
+  const [selection, setSelection] = useState([]);
+  const [product, setProduct] = useState({});
   const [productDetails, setProductDetails] = useState({
+    id: "",
     name: "",
     price: "",
     description: "",
@@ -44,7 +52,7 @@ const AddProduct = () => {
     let value = e.target.value;
     const duplicate = selection.includes(value);
     if (!duplicate) {
-      setselection((prev) => [...prev, value]);
+      setSelection((prev) => [...prev, value]);
     }
   };
 
@@ -57,23 +65,8 @@ const AddProduct = () => {
     let token = localStorage.getItem("nifInspiredToken");
     if (valid) {
       setLoading(true);
-      let data = await createProduct(token, productDetails, setSubmited);
-      if (data) {
-        setProductDetails({
-          name: "",
-          price: "",
-          description: "",
-          image: "",
-          quantity: "",
-          category: "",
-          usage: "",
-          contents: "",
-          allergenes: "",
-          functions: "",
-        });
-        setFile("");
-        setLoading(false);
-      }
+      let data = await editProduct(token, productDetails, setSubmited);
+      setLoading(false);
     }
   };
 
@@ -87,7 +80,6 @@ const AddProduct = () => {
       setProductDetails({ ...productDetails, image: base64.file });
       setFile(base64.base64);
       setChanging(!changing);
-      // Call API to upload image to database
     }
     console.log(base64);
   };
@@ -97,6 +89,32 @@ const AddProduct = () => {
     // console.log(categories);
     if (categories) {
       setCategories(categories);
+    }
+  };
+
+  const getProductDetails = async () => {
+    console.log(productId);
+    getCategories();
+    let data = await fetchSingleProduct(productId);
+    console.log(data.category);
+    if (data) {
+      setProduct(data);
+      setProductDetails({
+        id: data?.id,
+        name: data?.name,
+        price: data?.price,
+        description: data?.description,
+        image: data?.image,
+        quantity: data?.quantity,
+        category: data?.category,
+        usage: data?.usage,
+        contents: data?.contents,
+        allergenes: data?.allergenes,
+        functions: data?.functions,
+      });
+      setFile(data?.image);
+      setSelection(data?.category);
+      setValid(true);
     }
   };
 
@@ -126,7 +144,7 @@ const AddProduct = () => {
       user = JSON.parse(user);
       setUser(user);
       scrollToRef(top);
-      getCategories();
+      getProductDetails();
     } else {
       navigate("/");
     }
@@ -134,23 +152,30 @@ const AddProduct = () => {
   return (
     <>
       <div
-        className="relative w-full px-[20px] cflexss gap-[52px] h-full overflow-y-auto"
+        className="relative w-full mt-[-50px] px-[20px] cflexss gap-[52px] h-full overflow-y-auto"
         ref={top}
       >
         {submited && (
           <Congratulate
             setSubmited={setSubmited}
-            type="product"
+            type="edit-product"
             user={user?.name}
           />
         )}
-        <p className="text-[24px] capitalize">Let’s get Creating {user.name}</p>
+        <div
+          className="rounded-full w-[30px] h-[30px] bg-white shadow-md flexmm cursor-pointer"
+          onClick={() => {
+            window.history.back();
+          }}
+        >
+          <ChevronLeftOutline />
+        </div>
         <form className="flexbs gap-[70px] h-full" onSubmit={handleSubmit}>
           <div className="cflexss gap-[37px] text-[18px]">
             <div>
-              <p className="text-[24px] font-bold">Add New Product </p>
+              <p className="text-[24px] font-bold">Edit Product </p>
               <p className="font-normal text-[16px]">
-                create a new product available on sale{" "}
+                Edit your product to your taste
               </p>
             </div>
             <div className="w-[511px]">
@@ -186,9 +211,11 @@ const AddProduct = () => {
                 {categories?.map((category) => {
                   return (
                     <>
-                      <option value={category.name}>
-                        {category.name.toLowerCase()}
-                      </option>
+                      {category !== productDetails.category && (
+                        <option value={category.name}>
+                          {category.name.toLowerCase()}
+                        </option>
+                      )}
                     </>
                   );
                 })}
@@ -199,7 +226,7 @@ const AddProduct = () => {
                     key={index}
                     className=" border px-3 py-1 rounded-lg cursor-pointer"
                     onClick={() => {
-                      setselection(selection.filter((i) => i !== item));
+                      setSelection(selection.filter((i) => i !== item));
                     }}
                   >
                     {item}
@@ -337,10 +364,10 @@ const AddProduct = () => {
                 {loading ? (
                   <div className="flexmm gap-[10px] w-full">
                     <Loader />
-                    <p>Add Product</p>
+                    <p>Save</p>
                   </div>
                 ) : (
-                  <p>Add Product</p>
+                  <p>Save</p>
                 )}
               </button>
               {!valid && (
@@ -356,4 +383,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

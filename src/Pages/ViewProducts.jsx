@@ -32,6 +32,7 @@ const ViewProducts = () => {
   const getAllProducts = async () => {
     setLoading(true);
     let all = await fetchAllProducts();
+    console.log(all)
     if (all) {
       setProducts(all);
       setLoading(false);

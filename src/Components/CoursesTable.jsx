@@ -6,9 +6,8 @@ import {
   ArrowRight,
   SearchOutline,
   FilterOutline,
-  ChevronUpOutline,
-  ChevronDownOutline,
 } from "heroicons-react";
+import Alert from "../PopUps/Alert";
 import { Paginated, GetPaginatedData } from "./Pagination";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "../../node_modules/react-loading-skeleton/dist/skeleton.css";
@@ -56,8 +55,6 @@ const CoursesTable = ({ orders, setOrders }) => {
           <TableOfOrders
             orders={orders}
             setOrders={setOrders}
-            // setorder={setorder}
-            // setContent={setContent}
             searchQuery={searchQuery}
             setIsOpenModal={setIsOpenModal}
             setModalContent={setModalContent}
@@ -72,10 +69,9 @@ export default CoursesTable;
 
 const TableOfOrders = ({
   orders,
-  setOrders,
-  // setorder,
-  // setContent,
   searchQuery,
+  setIsOpenModal,
+  setModalContent,
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
@@ -101,6 +97,13 @@ const TableOfOrders = ({
       date: formattedDate, // e.g., "October 2, 2024"
       time: formattedTime, // e.g., "3:36 PM"
     };
+  };
+
+  const handleStatusChange = (e) => {
+    const status = e.target.value;
+    console.log(status);
+    setModalContent(<Alert status={status} setIsOpenModal={setIsOpenModal} />);
+    setIsOpenModal(true);
   };
 
   useEffect(() => {
@@ -138,6 +141,9 @@ const TableOfOrders = ({
             <td className="px-[24px] py-[16px]">
               <p>Status</p>
             </td>
+            <td className="px-[24px] py-[16px]">
+              <p>Action</p>
+            </td>
           </tr>
         </thead>
         {orders?.length > 0 && (
@@ -150,10 +156,6 @@ const TableOfOrders = ({
                       <tr
                         key={index}
                         className="cursor-pointer border-b-[1px] bg-white hover:bg-[#F5F5F5]"
-                        onClick={() => {
-                          // setorder(order);
-                          // setContent("create order");
-                        }}
                       >
                         <td className="px-[24px] py-[16px]">
                           <p>{formatDate(order.updated_at).date}</p>
@@ -189,6 +191,51 @@ const TableOfOrders = ({
                               {order.status}
                             </p>
                           </div>
+                        </td>
+                        <td className="px-[24px] py-[16px]">
+                          <select
+                            className="w-[120px] px-[10px] py-[12px] outline-none border-[1px] rounded-[10px]"
+                            onChange={handleStatusChange}
+                          >
+                            {order.status === "pending" && (
+                              <>
+                                <option
+                                  value="pending"
+                                  className="text-[#FEE718] capitalize"
+                                >
+                                  {order.status}
+                                </option>
+                                <option
+                                  value="completed"
+                                  className="text-[#22A900]"
+                                >
+                                  completed
+                                </option>
+                                <option value="cancel" className="text-red-700">
+                                  Cancel
+                                </option>
+                              </>
+                            )}
+                            {order.status === "completed" && (
+                              <>
+                                <option
+                                  value="completed"
+                                  className="text-[#FEE718] capitalize"
+                                >
+                                  {order.status}
+                                </option>
+                                <option
+                                  value="pending"
+                                  className="text-[#22A900]"
+                                >
+                                  pending
+                                </option>
+                                <option value="Cancel" className="text-red-700">
+                                  Cancel
+                                </option>
+                              </>
+                            )}
+                          </select>
                         </td>
                       </tr>
                     </>

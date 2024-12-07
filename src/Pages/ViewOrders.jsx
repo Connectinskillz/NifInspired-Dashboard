@@ -17,9 +17,7 @@ const ViewOrders = () => {
   return (
     <>
       <div className="px-[20px] w-full">
-        <div className="mt-4">
-          <CoursesTable orders={orders} setOrders={setOrders} />
-        </div>
+        <CoursesTable orders={orders} setOrders={setOrders} />
       </div>
     </>
   );
