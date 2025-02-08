@@ -11,6 +11,8 @@ import {
   fetchCategories,
   editProduct,
 } from "../Services/request";
+import { IoClose } from "react-icons/io5";
+import { IconContext } from "react-icons";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 const EditProduct = () => {
@@ -96,8 +98,9 @@ const EditProduct = () => {
     console.log(productId);
     getCategories();
     let data = await fetchSingleProduct(productId);
-    console.log(data.category);
+    console.log(data.category.length);
     if (data) {
+      console.log([...data.category]);
       setProduct(data);
       setProductDetails({
         id: data?.id,
@@ -113,7 +116,9 @@ const EditProduct = () => {
         functions: data?.functions,
       });
       setFile(data?.image);
-      setSelection(data?.category);
+      data?.category.length > 1
+        ? setSelection([...data?.category])
+        : setSelection([data?.category]);
       setValid(true);
     }
   };
@@ -156,11 +161,7 @@ const EditProduct = () => {
         ref={top}
       >
         {submited && (
-          <Congratulate
-            setSubmited={setSubmited}
-            type="edit-product"
-            user={user?.name}
-          />
+          <Congratulate setSubmited={setSubmited} type="edit-product" user={user?.name} />
         )}
         <div
           className="rounded-full w-[30px] h-[30px] bg-white shadow-md flexmm cursor-pointer"
@@ -174,9 +175,7 @@ const EditProduct = () => {
           <div className="cflexss gap-[37px] text-[18px]">
             <div>
               <p className="text-[24px] font-bold">Edit Product </p>
-              <p className="font-normal text-[16px]">
-                Edit your product to your taste
-              </p>
+              <p className="font-normal text-[16px]">Edit your product to your taste</p>
             </div>
             <div className="w-[511px]">
               <p>Product name</p>
@@ -212,26 +211,30 @@ const EditProduct = () => {
                   return (
                     <>
                       {category !== productDetails.category && (
-                        <option value={category.name}>
-                          {category.name.toLowerCase()}
-                        </option>
+                        <option value={category.name}>{category.name.toLowerCase()}</option>
                       )}
                     </>
                   );
                 })}
               </select>
-              <div className="flex items-center gap-2 w-full  my-1 rounded-lg p-1 text-[12px]">
-                {selection.map((item, index) => (
-                  <p
-                    key={index}
-                    className=" border px-3 py-1 rounded-lg cursor-pointer"
-                    onClick={() => {
-                      setSelection(selection.filter((i) => i !== item));
-                    }}
-                  >
-                    {item}
-                  </p>
-                ))}
+              <div className="flex items-center gap-2 w-full  my-1 rounded-lg p-1 text-[12px] border">
+                {selection?.map((item, index) => {
+                  return (
+                    <p
+                      key={index}
+                      className=" border px-3 py-1 rounded-lg cursor-pointer flex items-center gap-2"
+                    >
+                      {item}
+                      <IconContext.Provider value={{ size: "15px", color: "grey" }}>
+                        <IoClose
+                          onClick={() => {
+                            setSelection(selection.filter((i) => i !== item));
+                          }}
+                        />
+                      </IconContext.Provider>
+                    </p>
+                  );
+                })}
               </div>
             </div>
             <div className="w-[511px]">
@@ -325,10 +328,11 @@ const EditProduct = () => {
                     />
                     <p>Click to Add product image or Drag and Drop </p>
                     <div className="absolute top-[10px] cflexmm gap-[3px] left-[10%] opacity-0 cursor-pointer">
-                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => {
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
                         return (
-                          <>
+                          <div key={index}>
                             <FileBase64
+                              key={index}
                               name="image"
                               defaultValue=""
                               multiple={false}
@@ -336,7 +340,7 @@ const EditProduct = () => {
                                 OnChangeUploadFile(base64);
                               }}
                             />
-                          </>
+                          </div>
                         );
                       })}
                     </div>
@@ -355,9 +359,7 @@ const EditProduct = () => {
             <div className="w-full cflexmm gap-[10px]">
               <button
                 className={`w-full rounded-full text-[24px] font-bold text-white  py-[22px] ${
-                  valid
-                    ? "bg-accent cursor-pointer"
-                    : "bg-accent/40 cursor-not-allowed"
+                  valid ? "bg-accent cursor-pointer" : "bg-accent/40 cursor-not-allowed"
                 } flexmm`}
                 type="submit"
               >
@@ -370,11 +372,7 @@ const EditProduct = () => {
                   <p>Save</p>
                 )}
               </button>
-              {!valid && (
-                <p className="text-[14px] text-red-700">
-                  *All fields are required!
-                </p>
-              )}
+              {!valid && <p className="text-[14px] text-red-700">*All fields are required!</p>}
             </div>
           </div>
         </form>
