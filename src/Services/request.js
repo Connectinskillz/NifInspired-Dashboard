@@ -102,7 +102,6 @@ export const editProduct = async (token, body, setSubmited) => {
   await axios
     .post(`${api}/edit-product`, body, setImageConfig(token))
     .then((response) => {
-      console.log(response);
       if (response.data.status === true) {
         result = response.data.product;
         setSubmited(true);

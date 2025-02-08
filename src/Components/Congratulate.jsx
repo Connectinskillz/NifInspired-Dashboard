@@ -15,22 +15,16 @@ const Congratulate = ({ setSubmited, type, user }) => {
           setSubmited(false);
         }}
       >
-        <img
-          src="/congrats.svg"
-          alt="congratulate"
-          className="w-[128px] h-[128px]"
-        />
-        <p className="text-center capitalize">
+        <img src="/congrats.svg" alt="congratulate" className="w-[128px] h-[128px]" />
+        <div className="text-center capitalize">
           Great job {user}{" "}
           <span className="block">
             {type === "product" && <p>Product has successfully been created</p>}
-            {type === "edit-product" && (
-              <p>Product has successfully been edited</p>
-            )}
+            {type === "edit-product" && <p>Product has successfully been edited</p>}
             {type === "blog" && <p>Blog has successfully been created</p>}
             {type === "edit-blog" && <p>Blog has successfully been edited</p>}
           </span>
-        </p>
+        </div>
       </div>
     </>
   );
