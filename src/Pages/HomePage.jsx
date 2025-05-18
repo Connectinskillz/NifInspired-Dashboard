@@ -78,11 +78,11 @@ const HomePage = () => {
           </div>
 
           <div className="cflexmm gap-[30px] w-[320px] flex-shrink">
-            <p className="text-[18px] italic">View / Edit blog</p>
+            <p className="text-[18px] italic">Edit / Delete a blog</p>
             <Link to="/blogs" className="w-full">
               <div className="w-full text-[20px] cflexmm rounded-[10px] gap-[38px] text-white pb-[30px] pt-[95px] bg-[#066B63] cursor-pointer">
                 <BiEdit size="55" />
-                <p>View / Edit Blog</p>
+                <p>Edit / Delete Blog</p>
               </div>
             </Link>
           </div>

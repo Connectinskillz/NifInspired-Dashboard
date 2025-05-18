@@ -53,7 +53,7 @@ const RootLayout = () => {
             <Link to="/blogs">
               <div className="w-[155px] text-[12px] flexsm rounded-[3px] gap-[12px] text-white px-[15px] py-[28px] bg-[#066B63] cursor-pointer">
                 <BiEditAlt size="30" />
-                <p>View / Edit Blog</p>
+                <p>Edit / Delete Blog</p>
               </div>
             </Link>
 

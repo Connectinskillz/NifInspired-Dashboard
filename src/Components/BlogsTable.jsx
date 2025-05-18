@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { BiEditAlt } from "react-icons/bi";
 import ReactPaginate from "react-paginate";
 import {
   ArrowLeft,
@@ -11,13 +13,16 @@ import { Paginated, GetPaginatedData } from "./Pagination";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "../../node_modules/react-loading-skeleton/dist/skeleton.css";
 
-const CoursesTable = ({ blogs, setBlogs }) => {
+const CoursesTable = ({ blogs, setBlogs, selected, setSelected }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <>
-      <div className="cflexss w-full gap-[30px] px-[2%] mobile:px-0 font-inter">
+      <div
+        className="cflexss gap-[30px] px-[2%] mobile:px-0 font-inter"
+        style={{ width: "calc(100vw - 650px)" }}
+      >
         <div className="w-full text-[32px] font-bold text-[#000000] flexss">
           <p>Blogs</p>
         </div>
@@ -39,7 +44,13 @@ const CoursesTable = ({ blogs, setBlogs }) => {
               </div>
             </div>
           </div>
-          <TableOfBlogs blogs={blogs} searchQuery={searchQuery} navigate={navigate}/>
+          <TableOfBlogs
+            blogs={blogs}
+            searchQuery={searchQuery}
+            navigate={navigate}
+            selected={selected}
+            setSelected={setSelected}
+          />
         </div>
       </div>
     </>
@@ -48,7 +59,13 @@ const CoursesTable = ({ blogs, setBlogs }) => {
 
 export default CoursesTable;
 
-const TableOfBlogs = ({ blogs, searchQuery, navigate }) => {
+const TableOfBlogs = ({
+  blogs,
+  searchQuery,
+  navigate,
+  selected,
+  setSelected,
+}) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const PAGINATION = 10;
@@ -69,7 +86,10 @@ const TableOfBlogs = ({ blogs, searchQuery, navigate }) => {
   );
   return (
     <>
-      <table className="w-full overflow-x-scroll font-normal text-[12px] p-0 m-0">
+      <table
+        className="overflow-x-scroll font-normal text-[12px] p-0 m-0"
+        style={{ width: "calc(100vw - 650px)" }}
+      >
         {blogs?.length > 0 && (
           <>
             <tbody className="w-full cflexss gap-[20px]">
@@ -78,12 +98,34 @@ const TableOfBlogs = ({ blogs, searchQuery, navigate }) => {
                   return (
                     <>
                       <div
-                        className="cursor-pointer w-[85%] bg-white hover:bg-[#EEEEEE] flexss gap-[10px] rounded-[10px] shadow-md border-[1px] p-[10px] transtion-all duration-150"
+                        className={`group relative cursor-pointer w-full ${
+                          selected.find((item) => item.id === blog.id) &&
+                          "border-accent border-[2px]"
+                        } bg-white hover:bg-[#EEEEEE] flexss gap-[10px] rounded-[10px] shadow-md border-[1px] p-[10px] transtion-all duration-150`}
                         key={index}
                         onClick={() => {
-                          navigate(`/blogs/${blog.id}`);
+                          if (selected.find((item) => item.id === blog.id)) {
+                            // if (categoryTitle) {
+                            //   setSelected(
+                            //     selected.filter(
+                            //       (item) => item.id !== blog.id
+                            //     )
+                            //   );
+                            // }
+                            setSelected(
+                              selected.filter((item) => item.id !== blog.id)
+                            );
+                          } else {
+                            setSelected([...selected, blog]);
+                          }
                         }}
                       >
+                        <Link
+                          to={`/blogs/${blog.id}`}
+                          className="hidden group-hover:block absolute top-[5px] right-[5px] px-[10px] py-[10px] bg-white rounded-full"
+                        >
+                          <BiEditAlt size="15px" />
+                        </Link>
                         <img
                           src={blog.image}
                           alt={`${blog.title}-${index + 1}`}

@@ -15,7 +15,7 @@ import "../../node_modules/react-loading-skeleton/dist/skeleton.css";
 import Button from "./Button";
 // import { reorderorder } from "../../services/request";
 
-const CoursesTable = ({ orders, setOrders }) => {
+const OrdersTable = ({ orders, setOrders }) => {
   const navigate = useNavigate();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -57,7 +57,7 @@ const CoursesTable = ({ orders, setOrders }) => {
             setOrders={setOrders}
             searchQuery={searchQuery}
             setIsOpenModal={setIsOpenModal}
-            setModalContent={setModalContent}
+            setModalContent={setModalContent}           
           />
         </div>
       </div>
@@ -65,13 +65,13 @@ const CoursesTable = ({ orders, setOrders }) => {
   );
 };
 
-export default CoursesTable;
+export default OrdersTable;
 
 const TableOfOrders = ({
   orders,
   searchQuery,
   setIsOpenModal,
-  setModalContent,
+  setModalContent  
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);

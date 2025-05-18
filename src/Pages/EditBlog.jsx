@@ -58,9 +58,11 @@ const EditBlog = () => {
     console.log(base64);
   };
 
-  const getBlogDetails = async () => {
+  const getBlogDetails = async (user) => {
+    scrollToRef(top);
+    setUser(user);
     let data = await fetchSingleBlog(blogId);
-    // console.log(data.title);
+    console.log(data);
     if (data) {
       setBlogDetails({
         id: data?.id,
@@ -92,9 +94,7 @@ const EditBlog = () => {
     if (token) {
       let user = localStorage.getItem("nifInspiredUser");
       user = JSON.parse(user);
-      setUser(user);
-      getBlogDetails();
-      scrollToRef(top);
+      getBlogDetails(user);
     } else {
       navigate("/");
     }
@@ -118,7 +118,7 @@ const EditBlog = () => {
             window.history.back();
           }}
         >
-          <ChevronLeftOutline />
+          <ChevronLeftOutline size={20} />
         </div>
         <form className="flexbs gap-[70px] h-full" onSubmit={handleSubmit}>
           <div className="cflexss gap-[37px] text-[18px]">
@@ -135,7 +135,7 @@ const EditBlog = () => {
                 type="text"
                 name="title"
                 onChange={handleChange}
-                value={blogDetails.title}
+                value={blogDetails?.title}
                 placeholder="Blog Title"
               />
             </div>
@@ -146,7 +146,7 @@ const EditBlog = () => {
                 type="text"
                 name="description"
                 onChange={handleChange}
-                value={blogDetails.description}
+                value={blogDetails?.description}
                 placeholder="Tell us something about your blog"
               />
             </div>

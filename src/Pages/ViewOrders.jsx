@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CoursesTable from "../Components/CoursesTable";
+import OrdersTable from "../Components/OrdersTable";
 import { fetchAllOrders } from "../Services/request";
 
 const ViewOrders = () => {
@@ -17,7 +17,7 @@ const ViewOrders = () => {
   return (
     <>
       <div className="px-[20px] w-full">
-        <CoursesTable orders={orders} setOrders={setOrders} />
+        <OrdersTable orders={orders} setOrders={setOrders} />
       </div>
     </>
   );

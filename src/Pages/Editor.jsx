@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const Editor = ({blogDetails , setBlogDetails}) => {  
-
+const Editor = ({ blogDetails, setBlogDetails }) => {
   const modules = {
     toolbar: [
       [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -31,21 +30,22 @@ const Editor = ({blogDetails , setBlogDetails}) => {
   ];
 
   const handleChange = (value) => {
-    setBlogDetails({ ...blogDetails, blog: value }); 
-    
+    console.log("checking", value);
+    setTimeout(() => {
+      console.log(blogDetails)
+    }, 6000);    
   };
 
   return (
-    <div>      
+    <div>
       <ReactQuill
-        value={blogDetails.blog}
+        value={blogDetails?.blog}
         className="h-[200px] rounded-md shadow-sm"
-        onChange={handleChange}        
+        onChange={handleChange}
         theme="snow"
         modules={modules}
         formats={formats}
       />
-      {/* <p>Content: {content}</p> */}
     </div>
   );
 };

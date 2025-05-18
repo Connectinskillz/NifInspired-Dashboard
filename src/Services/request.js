@@ -341,3 +341,20 @@ export const fetchSingleBlog = async (id) => {
     return []; // Return an empty array in case of an error
   }
 };
+
+export const deleteBlog = async (token, id) => {
+  let result = [];
+  await axios
+    .delete(`${api}/delete-blog/${id}`, setConfig(token))
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      if (err.response.data.message) {
+        notifyError(err.response.data.message);
+      } else {
+        notifyError("Network Error");
+      }
+    });
+  return result;
+};
