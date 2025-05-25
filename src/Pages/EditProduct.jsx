@@ -73,12 +73,7 @@ const EditProduct = () => {
   };
 
   const OnChangeUploadFile = async (base64) => {
-    if (
-      base64.type === "image/png" ||
-      base64.type === "image/jpg" ||
-      base64.type === "image/jpeg" ||
-      base64.type === "image/jfif"
-    ) {
+    if (base64.type.startsWith("image/")) {
       setProductDetails({ ...productDetails, image: base64.file });
       setFile(base64.base64);
       setChanging(!changing);
@@ -157,11 +152,15 @@ const EditProduct = () => {
   return (
     <>
       <div
-        className="relative w-full mt-[-50px] px-[20px] cflexss gap-[52px] h-full overflow-y-auto"
+        className="w-full pt-[50px] pb-[150px] cflexss px-[20px] gap-[52px] h-full"
         ref={top}
       >
         {submited && (
-          <Congratulate setSubmited={setSubmited} type="edit-product" user={user?.name} />
+          <Congratulate
+            setSubmited={setSubmited}
+            type="edit-product"
+            user={user?.name}
+          />
         )}
         <div
           className="rounded-full w-[30px] h-[30px] bg-white shadow-md flexmm cursor-pointer"
@@ -171,13 +170,18 @@ const EditProduct = () => {
         >
           <ChevronLeftOutline />
         </div>
-        <form className="flexbs gap-[70px] h-full" onSubmit={handleSubmit}>
-          <div className="cflexss gap-[37px] text-[18px]">
+        <form
+          className="w-full flexbs gap-[70px] h-full"
+          onSubmit={handleSubmit}
+        >
+          <div className="w-1/2 cflexss gap-[37px] text-[18px]">
             <div>
               <p className="text-[24px] font-bold">Edit Product </p>
-              <p className="font-normal text-[16px]">Edit your product to your taste</p>
+              <p className="font-normal text-[16px]">
+                Edit your product to your taste
+              </p>
             </div>
-            <div className="w-[511px]">
+            <div className="w-full">
               <p>Product name</p>
               <input
                 className="w-full px-[20px] py-[10px] text-[14px] rounded-[9px] border-[2px] outline-none"
@@ -188,7 +192,7 @@ const EditProduct = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="w-[511px]">
+            <div className="w-full">
               <p>Product description</p>
               <textarea
                 className="w-full px-[20px] h-[112px] resize-none py-[10px] text-[14px] rounded-[9px] border-[2px] outline-none"
@@ -199,7 +203,7 @@ const EditProduct = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="w-[511px]">
+            <div className="w-full">
               <p>Choose a category</p>
               <select
                 className="w-full px-[10px] resize-none py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none cursor-pointer capitalize"
@@ -211,7 +215,9 @@ const EditProduct = () => {
                   return (
                     <>
                       {category !== productDetails.category && (
-                        <option value={category.name}>{category.name.toLowerCase()}</option>
+                        <option value={category.name}>
+                          {category.name.toLowerCase()}
+                        </option>
                       )}
                     </>
                   );
@@ -225,7 +231,9 @@ const EditProduct = () => {
                       className=" border px-3 py-1 rounded-lg cursor-pointer flex items-center gap-2"
                     >
                       {item}
-                      <IconContext.Provider value={{ size: "15px", color: "grey" }}>
+                      <IconContext.Provider
+                        value={{ size: "15px", color: "grey" }}
+                      >
                         <IoClose
                           onClick={() => {
                             setSelection(selection.filter((i) => i !== item));
@@ -237,7 +245,7 @@ const EditProduct = () => {
                 })}
               </div>
             </div>
-            <div className="w-[511px]">
+            <div className="w-full">
               <p>Usage</p>
               <input
                 className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
@@ -248,7 +256,7 @@ const EditProduct = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="w-[511px]">
+            <div className="w-full">
               <p>Ingredients</p>
               <input
                 className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
@@ -259,7 +267,7 @@ const EditProduct = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="w-[511px]">
+            <div className="w-full">
               <p>Allergines</p>
               <input
                 className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
@@ -270,7 +278,7 @@ const EditProduct = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="w-[511px]">
+            <div className="w-full">
               <p>Function</p>
               <input
                 className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
@@ -281,7 +289,7 @@ const EditProduct = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="w-[511px]">
+            <div className="w-full">
               <p>Quantity</p>
               <input
                 type="number"
@@ -293,7 +301,7 @@ const EditProduct = () => {
               />
             </div>
 
-            <div className="w-[511px]">
+            <div className="w-full">
               <p>Price</p>
               <input
                 className="w-full px-[20px] py-[10px] rounded-[9px] text-[14px] border-[2px] outline-none"
@@ -305,18 +313,22 @@ const EditProduct = () => {
               />
             </div>
           </div>
-          <div className="cflexms mt-[120px] w-[456px] h-full gap-[174px] flex-shrink">
+          <div className="cflexms w-1/2 h-full gap-[120px] flex-shrink">
             <div className="w-full">
-              <div className="relative placeholder:w-full h-[320px] text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]">
+              <div
+                className={`relative placeholder:w-full ${
+                  file ? "h-auto" : "h-[320px]"
+                } text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]`}
+              >
                 {file ? (
                   <>
                     <img
                       src={file}
                       alt="product"
-                      className="w-full h-full rounded-[10px] object-cover"
+                      className="w-full h-auto rounded-[10px] object-cover"
                     />
-                    <div className="flexmm absolute top-[10px] right-[10px] z-10 cursor-pointer w-[40px] h-[40px] rounded-full bg-white">
-                      <X size="30px" color="black" onClick={() => {}} />
+                    <div className="flexmm absolute top-[10px] right-[10px] z-10 cursor-pointer w-[35px] h-[35px] rounded-full bg-white">
+                      <X size="25px" color="black" onClick={() => {}} />
                     </div>
                   </>
                 ) : (
@@ -359,7 +371,9 @@ const EditProduct = () => {
             <div className="w-full cflexmm gap-[10px]">
               <button
                 className={`w-full rounded-full text-[24px] font-bold text-white  py-[22px] ${
-                  valid ? "bg-accent cursor-pointer" : "bg-accent/40 cursor-not-allowed"
+                  valid
+                    ? "bg-accent cursor-pointer"
+                    : "bg-accent/40 cursor-not-allowed"
                 } flexmm`}
                 type="submit"
               >
@@ -372,7 +386,11 @@ const EditProduct = () => {
                   <p>Save</p>
                 )}
               </button>
-              {!valid && <p className="text-[14px] text-red-700">*All fields are required!</p>}
+              {!valid && (
+                <p className="text-[14px] text-red-700">
+                  *All fields are required!
+                </p>
+              )}
             </div>
           </div>
         </form>

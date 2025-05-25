@@ -8,6 +8,7 @@ import FileBase64 from "react-file-base64";
 import { X, ChevronLeftOutline } from "heroicons-react";
 import { fetchSingleBlog, editBlog } from "../Services/request";
 import Editor from "./Editor";
+import { BsEasel3 } from "react-icons/bs";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 const EditBlog = () => {
@@ -45,15 +46,12 @@ const EditBlog = () => {
   };
 
   const OnChangeUploadFile = async (base64) => {
-    if (
-      base64.type === "image/png" ||
-      base64.type === "image/jpg" ||
-      base64.type === "image/jpeg" ||
-      base64.type === "image/jfif"
-    ) {
+    if (base64.type.startsWith("image/")) {
       setBlogDetails({ ...blogDetails, image: base64.file });
       setFile(base64.base64);
       setChanging(!changing);
+    } else {
+      alert("Unsupported file type. Please upload an image.");
     }
     console.log(base64);
   };
@@ -102,7 +100,7 @@ const EditBlog = () => {
   return (
     <>
       <div
-        className="w-full mt-[-50px] cflexss px-[20px] gap-[52px] h-full overflow-y-auto"
+        className="w-full pt-[50px] pb-[150px] cflexss px-[20px] gap-[52px] h-full"
         ref={top}
       >
         {submited && (
@@ -120,15 +118,18 @@ const EditBlog = () => {
         >
           <ChevronLeftOutline size={20} />
         </div>
-        <form className="flexbs gap-[70px] h-full" onSubmit={handleSubmit}>
-          <div className="cflexss gap-[37px] text-[18px]">
+        <form
+          className="w-full flexbs gap-[70px] h-full"
+          onSubmit={handleSubmit}
+        >
+          <div className="w-1/2 cflexss gap-[37px] text-[18px]">
             <div>
               <p className="text-[24px] font-bold">Edit Blog </p>
               <p className="font-normal text-[16px]">
                 Edit your blog to your taste
               </p>
             </div>
-            <div className="w-[511px]">
+            <div className="w-full">
               <p>Blog title</p>
               <input
                 className="w-full px-[20px] py-[10px] text-[14px] rounded-[9px] border-[2px] outline-none"
@@ -139,7 +140,7 @@ const EditBlog = () => {
                 placeholder="Blog Title"
               />
             </div>
-            <div className="w-[511px]">
+            <div className="w-full">
               <p>Brief description</p>
               <textarea
                 className="w-full px-[20px] h-[112px] resize-none py-[10px] text-[14px] rounded-[9px] border-[2px] outline-none"
@@ -150,7 +151,7 @@ const EditBlog = () => {
                 placeholder="Tell us something about your blog"
               />
             </div>
-            <div className="w-[511px] cflexss gap-[10px]">
+            <div className="w-full cflexss gap-[10px]">
               <p>Blog Body</p>
               <Editor
                 blogDetails={blogDetails}
@@ -159,9 +160,13 @@ const EditBlog = () => {
             </div>
           </div>
 
-          <div className="cflexms h-full mt-[120px] gap-[174px]">
-            <div className="w-[456px]">
-              <div className="relative placeholder:w-full h-[320px] text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]">
+          <div className="cflexms w-1/2 h-full gap-[120px]">
+            <div className="w-full">
+              <div
+                className={`relative placeholder:w-full ${
+                  file ? "h-auto" : "h-[320px]"
+                } text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]`}
+              >
                 {file ? (
                   <>
                     <img
@@ -169,9 +174,9 @@ const EditBlog = () => {
                       alt="product"
                       className="w-full h-full rounded-[10px] object-cover"
                     />
-                    <div className="flexmm absolute top-[10px] right-[10px] z-10 cursor-pointer w-[40px] h-[40px] rounded-full bg-white">
+                    <div className="flexmm absolute top-[10px] right-[10px] z-10 cursor-pointer w-[35px] h-[35px] rounded-full bg-white">
                       <X
-                        size="30px"
+                        size="25px"
                         color="black"
                         onClick={() => {
                           setFile("");
@@ -184,7 +189,7 @@ const EditBlog = () => {
                     <img
                       src="/img.svg"
                       alt="image-placeholder"
-                      className="w-[78px] h-[78px] cursor-pointer"
+                      className="w-[70px] h-[70px] cursor-pointer"
                     />
                     <p>Click to Add product image or Drag and Drop </p>
                     <div className="absolute top-[10px] cflexmm gap-[3px] left-[10%] opacity-0 cursor-pointer">
