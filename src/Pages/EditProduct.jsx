@@ -317,7 +317,7 @@ const EditProduct = () => {
             <div className="w-full">
               <div
                 className={`relative placeholder:w-full ${
-                  file ? "h-auto" : "h-[320px]"
+                  file ? "h-[450px]" : "h-[320px]"
                 } text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]`}
               >
                 {file ? (
@@ -325,7 +325,7 @@ const EditProduct = () => {
                     <img
                       src={file}
                       alt="product"
-                      className="w-full h-auto rounded-[10px] object-cover"
+                      className="w-full h-full rounded-[10px] object-cover"
                     />
                     <div className="flexmm absolute top-[10px] right-[10px] z-10 cursor-pointer w-[35px] h-[35px] rounded-full bg-white">
                       <X size="25px" color="black" onClick={() => {}} />

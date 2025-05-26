@@ -164,7 +164,7 @@ const EditBlog = () => {
             <div className="w-full">
               <div
                 className={`relative placeholder:w-full ${
-                  file ? "h-auto" : "h-[320px]"
+                  file ? "h-[450px]" : "h-[320px]"
                 } text-[16px] cflexmm border-dashed border-[2px] rounded-[10px] border-black/70 gap-[12px]`}
               >
                 {file ? (
