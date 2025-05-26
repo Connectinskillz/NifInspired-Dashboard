@@ -41,14 +41,14 @@ const Product = ({ categoryTitle, item, selected, setSelected }) => {
             </Link>
             {!categoryTitle && (
               <div
-                className="absolute top-[10px] right-[10px] w-[30px] h-[30px] rounded-full flexmm bg-white"
+                className="absolute top-[10px] right-[10px] w-[25px] h-[25px] rounded-full flexmm bg-white"
                 onClick={() => {
                   setSelected(
                     selected.filter((item) => item.uuid !== dataItems.uuid)
                   );
                 }}
               >
-                <X />
+                <X size={25}/>
               </div>
             )}
             <div className="rounded-xl h-boxed overflow-hidden mobile:h-mboxed">

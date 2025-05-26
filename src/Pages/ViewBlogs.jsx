@@ -42,7 +42,7 @@ const ViewBlogs = () => {
 
   return (
     <>
-      <div className="px-[20px] flexss w-full">
+      <div className="px-[20px] py-[50px] flexss w-full">
         <BlogsTable
           blogs={blogs}
           setBlogs={setBlogs}

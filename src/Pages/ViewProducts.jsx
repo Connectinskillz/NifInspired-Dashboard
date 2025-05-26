@@ -86,7 +86,7 @@ const ViewProducts = () => {
   }, []);
   return (
     <>
-      <div className="w-full pl-[20px] flexss">
+      <div className="w-full py-[80px] pl-[20px] flexss">
         <div
           className="cflexss mr-[340px]"
           style={{ width: "calc(100% - 340px)" }}
