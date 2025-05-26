@@ -57,7 +57,7 @@ const OrdersTable = ({ orders, setOrders }) => {
             setOrders={setOrders}
             searchQuery={searchQuery}
             setIsOpenModal={setIsOpenModal}
-            setModalContent={setModalContent}           
+            setModalContent={setModalContent}
           />
         </div>
       </div>
@@ -71,7 +71,7 @@ const TableOfOrders = ({
   orders,
   searchQuery,
   setIsOpenModal,
-  setModalContent  
+  setModalContent,
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
@@ -120,28 +120,28 @@ const TableOfOrders = ({
       <table className="w-full overflow-x-scroll font-normal text-[12px] p-0 m-0">
         <thead scope="column" className="w-full font-normal">
           <tr className="w-full overflow-x-scroll px-[10px] text-[14px] text-[#066B63] font-bold bg-[#066b631a] rounded-[6px]">
-            <td className="px-[24px] py-[16px]">
+            <td className="px-[15px] py-[16px]">
               <p>Date of order</p>
             </td>
-            <td className="px-[24px] py-[16px]">
+            <td className="px-[15px] py-[16px]">
               <p>Order Id</p>
             </td>
-            <td className="px-[24px] py-[16px]">
+            <td className="px-[15px] py-[16px]">
               <p>Time of order</p>
             </td>
-            <td className="px-[24px] py-[16px]">
+            <td className="px-[15px] py-[16px]">
               <p>Customer Email</p>
             </td>
-            <td className="px-[24px] py-[16px]">
+            <td className="px-[15px] py-[16px]">
               <p>Order</p>
             </td>
-            <td className="px-[24px] py-[16px]">
+            <td className="px-[15px] py-[16px]">
               <p>Total Price</p>
             </td>
-            <td className="px-[24px] py-[16px]">
+            <td className="px-[15px] py-[16px]">
               <p>Status</p>
             </td>
-            <td className="px-[24px] py-[16px]">
+            <td className="px-[15px] py-[16px]">
               <p>Action</p>
             </td>
           </tr>
@@ -157,25 +157,25 @@ const TableOfOrders = ({
                         key={index}
                         className="cursor-pointer border-b-[1px] bg-white hover:bg-[#F5F5F5]"
                       >
-                        <td className="px-[24px] py-[16px]">
+                        <td className="w-[120px] px-[15px] flexss  py-[16px]">
                           <p>{formatDate(order.updated_at).date}</p>
                         </td>
-                        <td className="px-[24px] py-[16px]">
+                        <td className="px-[15px] py-[16px]">
                           <p>{order.order_id}</p>
                         </td>
-                        <td className="px-[24px] py-[16px]">
+                        <td className="px-[15px] py-[16px]">
                           <p>{formatDate(order.updated_at).time}</p>
                         </td>
-                        <td className="px-[24px] py-[16px]">
+                        <td className="px-[15px] py-[16px]">
                           <p>{order.customer_email}</p>
                         </td>
-                        <td className="px-[24px] py-[16px]">
+                        <td className="px-[15px] py-[16px] text-wrap max-w-[300px]">
                           <p>{order.order_details}</p>
                         </td>
-                        <td className="px-[24px] py-[16px]">
-                          <p>N{order.total_price}</p>
+                        <td className="px-[15px] py-[16px]">
+                          <p>${order.total_price}</p>
                         </td>
-                        <td className="px-[24px] py-[16px]">
+                        <td className="px-[15px] py-[16px]">
                           <div
                             className={`flexmm px-[10px] py-[5px] rounded-full ${
                               order.status === "completed" && "bg-[#EFFFEB]"
@@ -192,7 +192,7 @@ const TableOfOrders = ({
                             </p>
                           </div>
                         </td>
-                        <td className="px-[24px] py-[16px]">
+                        <td className="px-[15px] py-[16px]">
                           <select
                             className="w-[120px] px-[10px] py-[12px] outline-none border-[1px] rounded-[10px]"
                             onChange={handleStatusChange}

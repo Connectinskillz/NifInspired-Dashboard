@@ -16,7 +16,7 @@ const ViewOrders = () => {
 
   return (
     <>
-      <div className="px-[20px] w-full">
+      <div className="py-[50px] px-[20px] w-full">
         <OrdersTable orders={orders} setOrders={setOrders} />
       </div>
     </>
