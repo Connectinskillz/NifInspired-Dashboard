@@ -51,6 +51,7 @@ const AddBlog = () => {
   };
 
   const OnChangeUploadFile = async (base64) => {
+    console.log(blogDetails);
     if (base64.type.startsWith("image/")) {
       setBlogDetails({ ...blogDetails, image: base64.file });
       setFile(base64.base64);

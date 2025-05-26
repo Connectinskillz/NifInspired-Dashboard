@@ -30,10 +30,16 @@ const Editor = ({ blogDetails, setBlogDetails }) => {
   ];
 
   const handleChange = (value) => {
-    console.log("checking", value);
-    setTimeout(() => {
-      console.log(blogDetails)
-    }, 6000);    
+    // console.log("checking", value);
+    if (!blogDetails.blog) {
+      setTimeout(() => {
+        setBlogDetails({ ...blogDetails, blog: value });
+        // console.log("blogDetails", blogDetails);
+      }, 3000);
+    } else {
+      setBlogDetails({ ...blogDetails, blog: value });
+      // console.log("blogDetails", blogDetails);
+    }
   };
 
   return (
