@@ -157,7 +157,7 @@ const TableOfOrders = ({
                         key={index}
                         className="cursor-pointer border-b-[1px] bg-white hover:bg-[#F5F5F5]"
                       >
-                        <td className="w-[120px] px-[15px] flexss  py-[16px]">
+                        <td className="w-[120px] px-[15px] py-[16px]">
                           <p>{formatDate(order.updated_at).date}</p>
                         </td>
                         <td className="px-[15px] py-[16px]">
