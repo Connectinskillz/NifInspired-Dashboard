@@ -100,7 +100,7 @@ const TableOfOrders = ({
   };
 
   const handleStatusChange = (e, order) => {
-    const status = e.target.value;    
+    const status = e.target.value;
     setModalContent(
       <Alert status={status} setIsOpenModal={setIsOpenModal} order={order} />
     );
@@ -171,7 +171,7 @@ const TableOfOrders = ({
                           <p>{order.customer_email}</p>
                         </td>
                         <td className="px-[15px] py-[16px] text-wrap max-w-[300px]">
-                          {/* <p>{console.log(JSON.parse(order.order_details))}</p> */}
+                          {order.order_details}
                         </td>
                         <td className="px-[15px] py-[16px]">
                           <p>£ {order.total_price}</p>
