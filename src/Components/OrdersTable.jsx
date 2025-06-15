@@ -99,10 +99,11 @@ const TableOfOrders = ({
     };
   };
 
-  const handleStatusChange = (e) => {
-    const status = e.target.value;
-    console.log(status);
-    setModalContent(<Alert status={status} setIsOpenModal={setIsOpenModal} />);
+  const handleStatusChange = (e, order) => {
+    const status = e.target.value;    
+    setModalContent(
+      <Alert status={status} setIsOpenModal={setIsOpenModal} order={order} />
+    );
     setIsOpenModal(true);
   };
 
@@ -170,10 +171,10 @@ const TableOfOrders = ({
                           <p>{order.customer_email}</p>
                         </td>
                         <td className="px-[15px] py-[16px] text-wrap max-w-[300px]">
-                          <p>{order.order_details}</p>
+                          {/* <p>{console.log(JSON.parse(order.order_details))}</p> */}
                         </td>
                         <td className="px-[15px] py-[16px]">
-                          <p>${order.total_price}</p>
+                          <p>£ {order.total_price}</p>
                         </td>
                         <td className="px-[15px] py-[16px]">
                           <div
@@ -195,7 +196,9 @@ const TableOfOrders = ({
                         <td className="px-[15px] py-[16px]">
                           <select
                             className="w-[120px] px-[10px] py-[12px] outline-none border-[1px] rounded-[10px]"
-                            onChange={handleStatusChange}
+                            onChange={(e) => {
+                              handleStatusChange(e, order);
+                            }}
                           >
                             {order.status === "pending" && (
                               <>
@@ -212,7 +215,7 @@ const TableOfOrders = ({
                                   completed
                                 </option>
                                 <option value="cancel" className="text-red-700">
-                                  Cancel
+                                  cancel
                                 </option>
                               </>
                             )}
@@ -220,18 +223,18 @@ const TableOfOrders = ({
                               <>
                                 <option
                                   value="completed"
-                                  className="text-[#FEE718] capitalize"
+                                  className="text-[#22A900] capitalize"
                                 >
                                   {order.status}
                                 </option>
                                 <option
                                   value="pending"
-                                  className="text-[#22A900]"
+                                  className="text-[#FEE718]"
                                 >
                                   pending
                                 </option>
-                                <option value="Cancel" className="text-red-700">
-                                  Cancel
+                                <option value="cancel" className="text-red-700">
+                                  cancel
                                 </option>
                               </>
                             )}

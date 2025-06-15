@@ -1,6 +1,27 @@
-import React from "react";
+import { useState } from "react";
+import { updateOrderStatus } from "../Services/request";
+import Loader from "../Components/Loader/Loader";
 
-const Alert = ({ status, setIsOpenModal }) => {
+const Alert = ({ status, setIsOpenModal, order }) => {
+  const [updated, setUpdated] = useState(false);
+  const handleStatusChange = async () => {
+    setUpdated(true);
+    let token = localStorage.getItem("nifInspiredToken");
+    let body = { order_id: order.order_id, status };
+    let data = await updateOrderStatus(token, body);
+    setUpdated(false);
+    if (data) {
+      if (status === "completed") {
+        order.status = "completed";
+      } else if (status === "pending") {
+        order.status = "pending";
+      } else if (status === "cancel") {
+        order.status = "cancelled";
+      }
+    }
+
+    setIsOpenModal(false);
+  };
   return (
     <>
       <div
@@ -32,8 +53,11 @@ const Alert = ({ status, setIsOpenModal }) => {
             <p>Are you sure you want to cancel this product Order?</p>
           )}
           <div className="w-full flexmm gap-[50px] text-[18px] text-white">
-            <button className="rounded-full px-[30px] font-[500]  py-[10px] flexmm outline-none bg-accent">
-              <p>Yes</p>
+            <button
+              className="rounded-full px-[30px] font-[500]  py-[10px] flexmm outline-none bg-accent"
+              onClick={handleStatusChange}
+            >
+              {updated ? <Loader /> : <p>Yes</p>}
             </button>
             <button
               className="rounded-full px-[30px] font-[500] py-[10px] flexmm outline-none bg-[#BB0000]"

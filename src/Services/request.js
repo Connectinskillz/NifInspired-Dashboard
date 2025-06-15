@@ -4,6 +4,7 @@ import { notify, notifyError } from "./toastify";
 // import { error } from "console";
 
 const api = "https://nifinspired.connectinskillz.com/api";
+const api2 = "nifinspired.com/api";
 // const api = "https://virtserver.swaggerhub.com/THECARETECH/nifinspired/1.0.0";
 
 // export function getCookie(cookieName: string) {
@@ -289,6 +290,23 @@ export const fetchAllOrders = async () => {
       if (response.data.status === true) {
         result = response.data.data;
       }
+    })
+    .catch((err) => {
+      if (err.response.data.message) {
+        notifyError(err.response.data.message);
+      } else {
+        notifyError("Network Error");
+      }
+    });
+  return result;
+};
+
+export const updateOrderStatus = async (token, body) => {
+  let result = [];
+  await axios
+    .patch(`${api}/update-order-status`, body, setConfig(token))
+    .then((response) => {
+      console.log(response);
     })
     .catch((err) => {
       if (err.response.data.message) {
