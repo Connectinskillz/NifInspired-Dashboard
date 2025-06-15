@@ -180,14 +180,18 @@ const TableOfOrders = ({
                           <div
                             className={`flexmm px-[10px] py-[5px] rounded-full ${
                               order.status === "completed" && "bg-[#EFFFEB]"
-                            } ${order.status === "pending" && "bg-[#FFFDE7]"}`}
+                            } ${order.status === "pending" && "bg-[#FFFDE7]"} ${
+                              order.status === "cancelled" && "bg-red-700/30"
+                            }`}
                           >
                             <p
                               className={`${
                                 order.status === "completed" && "text-[#22A900]"
                               } ${
                                 order.status === "pending" && "text-[#FEE718]"
-                              }`}
+                              }
+                              ${order.status === "cancelled" && "text-red-700"}
+                              `}
                             >
                               {order.status}
                             </p>
@@ -214,8 +218,11 @@ const TableOfOrders = ({
                                 >
                                   completed
                                 </option>
-                                <option value="cancel" className="text-red-700">
-                                  cancel
+                                <option
+                                  value="cancelled"
+                                  className="text-red-700"
+                                >
+                                  cancelled
                                 </option>
                               </>
                             )}
@@ -233,8 +240,33 @@ const TableOfOrders = ({
                                 >
                                   pending
                                 </option>
-                                <option value="cancel" className="text-red-700">
+                                <option
+                                  value="cancelled"
+                                  className="text-red-700"
+                                >
                                   cancel
+                                </option>
+                              </>
+                            )}
+                            {order.status === "cancelled" && (
+                              <>
+                                <option
+                                  value="cancelled"
+                                  className="text-red-700 capitalize"
+                                >
+                                  {order.status}
+                                </option>
+                                <option
+                                  value="pending"
+                                  className="text-[#FEE718]"
+                                >
+                                  pending
+                                </option>
+                                <option
+                                  value="completed"
+                                  className="text-[#22A900]"
+                                >
+                                  completed{" "}
                                 </option>
                               </>
                             )}

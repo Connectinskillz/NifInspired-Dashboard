@@ -15,7 +15,7 @@ const Alert = ({ status, setIsOpenModal, order }) => {
         order.status = "completed";
       } else if (status === "pending") {
         order.status = "pending";
-      } else if (status === "cancel") {
+      } else if (status === "cancelled") {
         order.status = "cancelled";
       }
     }
@@ -49,7 +49,7 @@ const Alert = ({ status, setIsOpenModal, order }) => {
               <strong>Pending</strong>
             </p>
           )}
-          {status === "cancel" && (
+          {status === "cancelled" && (
             <p>Are you sure you want to cancel this product Order?</p>
           )}
           <div className="w-full flexmm gap-[50px] text-[18px] text-white">
