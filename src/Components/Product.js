@@ -62,7 +62,7 @@ const Product = ({ categoryTitle, item, selected, setSelected }) => {
             <div className="flex flex-col ">
               <div className="flex items-center justify-between my-3 font-medium text-[14px]">
                 <p>{dataItems?.category}</p>
-                <p>${dataItems?.price}</p>
+                <p>£{dataItems?.price}</p>
               </div>
 
               <div className="cflexss w-full">

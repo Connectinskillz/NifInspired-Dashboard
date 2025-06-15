@@ -31,21 +31,25 @@ const Editor = ({ blogDetails, setBlogDetails }) => {
 
   const handleChange = (value) => {
     console.log("checking", value);
-    if (!blogDetails.blog) {
-      setTimeout(() => {
-        if (blogDetails.blog) {
-          setBlogDetails({ ...blogDetails, blog: value });
-          console.log("blogDetails", blogDetails);
-          console.log("value", value);
-          // console.log("blogDetails", blogDetails);
-        }
-      }, 3000);
-    } else {
-      setBlogDetails({ ...blogDetails, blog: value });
-      console.log("blogDetails", blogDetails);
-      console.log("value", value);
-      // console.log("blogDetails", blogDetails);
-    }
+    setBlogDetails({ ...blogDetails, blog: value });
+    console.log("blogDetails", blogDetails);
+    console.log("value", value);
+    // console.log("blogDetails", blogDetails);
+    // if (!blogDetails.blog) {
+    //   setTimeout(() => {
+    //     if (blogDetails.blog) {
+    //       setBlogDetails({ ...blogDetails, blog: value });
+    //       console.log("blogDetails", blogDetails);
+    //       console.log("value", value);
+    //       // console.log("blogDetails", blogDetails);
+    //     }
+    //   }, 3000);
+    // } else {
+    //   setBlogDetails({ ...blogDetails, blog: value });
+    //   console.log("blogDetails", blogDetails);
+    //   console.log("value", value);
+    //   // console.log("blogDetails", blogDetails);
+    // }
   };
 
   return (
