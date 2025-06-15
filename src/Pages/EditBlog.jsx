@@ -75,6 +75,7 @@ const EditBlog = () => {
   };
 
   useEffect(() => {
+    setBlogDetails(blogDetails);
     if (
       blogDetails.title &&
       blogDetails.description &&

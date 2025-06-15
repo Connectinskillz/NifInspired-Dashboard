@@ -37,7 +37,7 @@ const AddBlog = () => {
     if (valid) {
       setLoading(true);
       let data = await createBlog(token, blogDetails, setSubmited);
-      if (data) {
+      if (data.status === true) {
         setBlogDetails({
           title: "",
           description: "",
@@ -46,12 +46,12 @@ const AddBlog = () => {
         });
         setFile("");
         setLoading(false);
+        setChanging(!changing);
       }
     }
   };
 
   const OnChangeUploadFile = async (base64) => {
-    console.log(blogDetails);
     if (base64.type.startsWith("image/")) {
       setBlogDetails({ ...blogDetails, image: base64.file });
       setFile(base64.base64);
@@ -62,6 +62,7 @@ const AddBlog = () => {
   };
 
   useEffect(() => {
+    setBlogDetails(blogDetails);
     if (
       blogDetails.title &&
       blogDetails.description &&
