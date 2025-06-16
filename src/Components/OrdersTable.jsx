@@ -113,8 +113,14 @@ const TableOfOrders = ({
     }
   }, [orders]);
 
-  const filteredorders = orders?.filter((order) =>
-    order.order_details.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredorders = orders?.filter(
+    (order) =>
+      order.order_details.map((item, index) => {
+        return item.product.name
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase());
+      }) ||
+      order.customer_email.toLowerCase().includes(searchQuery.toLowerCase())
   );
   return (
     <>
@@ -171,7 +177,18 @@ const TableOfOrders = ({
                           <p>{order.customer_email}</p>
                         </td>
                         <td className="px-[15px] py-[16px] text-wrap max-w-[300px]">
-                          {order.order_details}
+                          {order.order_details.map((item, index) => {
+                            return (
+                              <>
+                                <p
+                                  key={index}
+                                  className="text-wrap max-w-[300px]"
+                                >
+                                  {item.product.name}
+                                </p>
+                              </>
+                            );
+                          })}
                         </td>
                         <td className="px-[15px] py-[16px]">
                           <p>£ {order.total_price}</p>

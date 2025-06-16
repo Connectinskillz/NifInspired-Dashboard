@@ -34,9 +34,7 @@ const HomePage = () => {
         </div>
         <div className="w-full flexbm mt-[20px] gap-[20px]">
           <div className="cflexmm gap-[30px] w-[320px] flex-shrink">
-            <p className="text-[18px] italic">
-              Add a new product
-            </p>
+            <p className="text-[18px] italic">Add a new product</p>
             <Link to="/add-product" className="w-full">
               <div className="w-full text-[20px] cflexmm rounded-[10px] gap-[38px] text-white pb-[30px] pt-[95px] bg-[#066B63] cursor-pointer">
                 <img
@@ -87,6 +85,11 @@ const HomePage = () => {
             </Link>
           </div>
         </div>
+        <Link to="/orders" className="w-full flexmm">
+          <div className="text-[16px] flexmm rounded-[10px] text-white py-[15px] px-[20px] bg-[#066B63] cursor-pointer">
+            <p>View Orders</p>
+          </div>
+        </Link>
       </div>
     </>
   );
